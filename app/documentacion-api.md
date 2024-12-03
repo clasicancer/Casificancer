@@ -18,11 +18,11 @@
 ---
 
 ## Introducción
-Esta API permite clasificar imágenes para detectar si contienen indicios de malaria. 
+Esta API permite clasificar imágenes para detectar tumores benignos o tumores malignos. 
 Es ideal para integrarse en aplicaciones que requieran un sistema de diagnóstico automatizado.
 
 ### Fecha de Actualización
-Última actualización: 25-11-2024
+Última actualización: 3-12-2024
 
 ---
 
@@ -37,16 +37,16 @@ Es ideal para integrarse en aplicaciones que requieran un sistema de diagnóstic
 ### Clonación del Repositorio
 Clona el repositorio del proyecto:
 ```bash
-git clone https://github.com/jrbeduardo/proyecto-malaria.git
-cd proyecto-malaria
+git clone https://github.com/clasicancer/Casificancer.git
+cd proyecto-cancer
 ```
 ## Carga del modelo
 
 El archivo de modelo necesario para ejecutar la API es bastante pesado y no está incluido directamente en el repositorio. Puedes descargarlo desde el siguiente enlace:
  
-[Descargar modelo malaria_detection_model.h5](https://drive.google.com/file/d/1dDQc0MbJ7ISSx5R4_XZDaKuU0P8YSR7M/view?usp=sharing)
+[Descargar cancer_modelo_2.h5](https://drive.google.com/file/d/17XrqdCtbny6RukYmdqZqthdpPddUPYFi/view?usp=share_link)
 
-Por favor, guarda el archivo en la ubicación indicada en la configuración del modelo (/app/malaria_detection_model.h5 si usas Docker).
+Por favor, guarda el archivo en la ubicación indicada en la configuración del modelo (/app/cancer_modelo_2.h5 si usas Docker).
  
 ## Uso de Docker
 
