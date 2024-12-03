@@ -6,9 +6,9 @@
 - **Integrantes**:  
   - Leslie Guadalupe Pérez Montes
   - Marían de los Ángeles Partida Contreras
-- José Emanuel Tellez Soto
+  - José Emanuel Tellez Soto
 
-![Mosquito](../images/descarga.jpeg)
+![Lucha](../images/lucha-contra-cancer1.jpg)
 
 ## Índice
 - [Portada](#portada)
