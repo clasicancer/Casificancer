@@ -37,7 +37,7 @@ Es ideal para integrarse en aplicaciones que requieran un sistema de diagnóstic
 ### Clonación del Repositorio
 Clona el repositorio del proyecto:
 ```bash
-git clone https://github.com/clasicancer/Casificancer.git
+git clone https://github.com/clasicancer/Clasificancer.git
 cd proyecto-cancer
 ```
 ## Carga del modelo
