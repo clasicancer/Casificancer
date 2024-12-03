@@ -27,19 +27,18 @@
 ## Alcance del proyecto
 
 ### Objetivo
-El objetivo de este proyecto es clasificar imágenes de células sanguíneas en dos categorías:
-1. **Con malaria (Label = MALARIA_SI):** Imágenes que contienen al menos un trofozoíto.
-2. **Sin malaria (Label = MALARIA_NO):** Imágenes que no contienen trofozoítos.
+El propósito central del proyecto es desarrollar un modelo automatizado basado en Redes Neuronales Convolucionales (CNN) para clasificar imágenes histopatológicas en dos categorías: "maligno" y "benigno". Este sistema está diseñado para asistir a profesionales de la salud en el diagnóstico temprano del cáncer de mama, reduciendo el tiempo de análisis y mejorando la precisión en la detección de tumores. El proyecto busca contribuir al ámbito médico mediante la integración de técnicas avanzadas de inteligencia artificial en el proceso de diagnóstico.
 
 ### Introducción
-La malaria es una enfermedad potencialmente mortal causada por parásitos del género *Plasmodium* y transmitida por la picadura de mosquitos infectados. El diagnóstico temprano y preciso es crucial para garantizar un tratamiento oportuno y prevenir complicaciones graves. Tradicionalmente, el diagnóstico se realiza mediante la observación manual de frotis sanguíneos teñidos bajo un microscopio, un proceso que requiere tiempo y experiencia técnica. 
 
-En este contexto, los avances en inteligencia artificial, específicamente en **deeplearning**, han abierto nuevas oportunidades para automatizar y mejorar la precisión del diagnóstico. Este proyecto utiliza una **Red Neuronal Convolucional (CNN)**, una arquitectura especializada en procesar datos visuales, para construir un clasificador de imágenes que detecte automáticamente la malaria en imágenes de frotis sanguíneos.
+El cáncer de mama es una de las principales causas de muerte en mujeres a nivel mundial. El diagnóstico temprano y preciso es esencial para mejorar las probabilidades de tratamiento exitoso y supervivencia. Tradicionalmente, el diagnóstico se basa en la evaluación manual de imágenes histopatológicas bajo microscopio, un proceso que requiere experiencia y tiempo y que a menudo está sujeto a variabilidad en la interpretación.
+
+Los avances en inteligencia artificial, particularmente en deep learning, han abierto nuevas posibilidades para automatizar y mejorar la precisión del diagnóstico. Este proyecto implementa una **Red Neuronal Convolucional (CNN)**, una arquitectura especializada en el procesamiento de datos visuales para construir un clasificador de imágenes histopatológicas que detecte automáticamente tumores benignos y malignos en muestras de tejido mamario, optimizando el diagnóstico y reduciendo la carga de trabajo del personal médico.
 
 
 ## Fuentes de información y procedimientos aplicados
 
-El conjunto de datos, descargado de Kaggle, pertenece al dominio de detección de malaria mediante imágenes de células sanguíneas. Este conjunto de datos esta compuesto por los siguientes archivos y carpetas:
+El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos y carpetas:
 
 - **images**.
 Este directorio contiene las imágenes utilizadas para la tarea de clasificación. Incluye imágenes de células sanguíneas infectadas y no infectadas por malaria.
@@ -210,66 +209,84 @@ Un F1-Score de 0.994 indica un balance excelente entre precisión y recall, lo q
 
 ## Conclusiones generales
 
-El clasificador de malaria basado en redes neuronales convolucionales representa un paso significativo hacia la automatización del diagnóstico médico. Con un desempeño excelente y un diseño escalable, este modelo tiene el potencial de salvar vidas y mejorar la calidad del diagnóstico en regiones donde la malaria sigue siendo un desafío crítico para la salud pública.
+El clasificador de imágenes histopatológicas del cáncer de mama basado en redes neuronales convolucionales constituye un avance crucial en la automatización del diagnóstico oncológico. Con un alto nivel de precisión y capacidad de generalización, este modelo puede optimizar la detección temprana y el manejo del cáncer de mama, mejorando significativamente la calidad del diagnóstico en contextos médicos, especialmente en regiones con recursos limitados y alta demanda de atención especializada.
 
-Este proyecto demuestra cómo la inteligencia artificial puede transformar la forma en que se aborda el diagnóstico médico:
+Este proyecto demuestra cómo la inteligencia artificial puede revolucionar el diagnóstico del cáncer de mama mediante imágenes histopatológicas:
 
-- **Rápido y Preciso:** El modelo proporciona resultados en tiempo real, lo que podría acelerar la detección de malaria en áreas rurales y urbanas.
-- **Económico:** Al automatizar el proceso, se reduce la necesidad de personal altamente capacitado, haciéndolo accesible para hospitales y laboratorios con recursos limitados.
-- **Escalable:** La solución puede adaptarse a otros problemas médicos relacionados con imágenes, como la detección de otras enfermedades infecciosas.
-
+- **Rápido y Preciso:** El modelo permite identificar tumores benignos y malignos en tiempo real, optimizando la detección temprana y mejorando las tasas de diagnóstico efectivo.
+- **Económico:** La automatización reduce la dependencia de especialistas altamente capacitados, haciéndolo viable para clínicas y hospitales con recursos limitados.
+- **Escalable:** Esta tecnología puede adaptarse a la clasificación de otras patologías basadas en imágenes, ampliando su impacto en diversas áreas de la medicina.
 
 
 ## Anexos
-- [Repositorio Github](https://github.com/jrbeduardo/proyecto-malaria)
-- [Conjunto de Datos para la Detección de Malaria de Lacuna en Kaggle](https://www.kaggle.com/datasets/rajsahu2004/lacuna-malaria-detection-dataset)
-- [Desafío de Detección de Malaria de Lacuna en Zindi](https://zindi.africa/competitions/lacuna-malaria-detection-challenge)
+- [Repositorio Github](https://github.com/clasicancer/Casificancer)
+- [Conjunto de Datos para la Detección de Cáncer de Mama](http://www.inf.ufpr.br/vri/databases/BreaKHis_v1.tar.gz)
 
 ## Glosario
 
-Este glosario proporciona una breve descripción de los términos biológicos relacionados con la detección de malaria utilizados en el proyecto.
+Este glosario proporciona una breve descripción de los términos relacionados con la clasificación de cáncer de mama utilizados en el proyecto.
 
-### **1. Malaria**
-- **Definición:** Enfermedad infecciosa causada por parásitos del género *Plasmodium*, transmitida principalmente por la picadura de mosquitos hembra del género *Anopheles*.
-- **Importancia:** Es una de las enfermedades infecciosas más prevalentes, afectando millones de personas cada año.
+### **1. Cáncer de Mama**
+- **Definición:** El cáncer de mama es una enfermedad en la que las células del tejido mamario crecen de manera descontrolada, formando un tumor maligno que puede invadir tejidos cercanos o diseminarse a otras partes del cuerpo a través de la sangre o el sistema linfático.
+- **Importancia:** Es el tipo de cáncer más común entre las mujeres a nivel mundial, representando una causa significativa de mortalidad y morbilidad. La detección temprana y el tratamiento adecuado son esenciales para mejorar las tasas de supervivencia y reducir el impacto en la calidad de vida de las pacientes.
+### **1. Imágenes Histopatológicas**
+- **Definición:** Las imágenes histopatológicas son representaciones visuales de cortes finos de tejido que han sido teñidos y observados bajo un microscopio. Estas imágenes permiten estudiar la arquitectura celular y tisular, identificando características relacionadas con enfermedades, como el cáncer.
+- **Importancia:** Son fundamentales en el diagnóstico y clasificación de enfermedades, ya que proporcionan información detallada sobre la estructura y comportamiento celular. En el caso del cáncer, estas imágenes permiten diferenciar entre tejidos normales, benignos y malignos, guiando decisiones clínicas y estrategias de tratamiento.
+### **1. Clasificación de Imágenes**
+- **Definición:** Proceso automatizado en el que un modelo de aprendizaje profundo, como una red neuronal convolucional (CNN), categoriza imágenes en clases específicas, como "maligno" o "benigno", basándose en patrones detectados en los datos visuales.
+### **1. Histología Mamaria**
+- **Definición:** Estudio de la estructura microscópica de los tejidos mamarios. Permite identificar diferencias clave entre tejidos normales, benignos y malignos, lo cual es crucial para el entrenamiento de modelos de clasificación.
 
-### **2. Trofozoíto**
-- **Definición:** Etapa activa de alimentación y crecimiento del parásito *Plasmodium* dentro de los glóbulos rojos.
-- **Relevancia:** La presencia de trofozoítos en una muestra de sangre es un indicador clave de infección por malaria.
+### **1. Tipos Histológicos de Tumores Mamarios**
+- **Definición:** Clasificación de los tumores según la apariencia de las células bajo el microscopio. Ejemplos incluyen adenosis, fibroadenoma, carcinoma ductal y carcinoma lobular. Estas categorías son las etiquetas utilizadas en los modelos de clasificación de imágenes.
 
-### **3. Glóbulos Rojos (Eritrocitos)**
-- **Definición:** Células sanguíneas responsables de transportar oxígeno a través del cuerpo.
-- **Relación con la malaria:** El parásito *Plasmodium* invade y se desarrolla dentro de los glóbulos rojos.
+### **1. Datos de Entrenamiento**
+- **Definición:** Conjunto de imágenes histopatológicas anotadas con información sobre la clase y tipo de tumor. Es esencial para que el modelo aprenda a diferenciar entre tumores benignos y malignos.
 
-### **4. Glóbulos Blancos (Leucocitos)**
-- **Definición:** Células del sistema inmunitario que protegen al cuerpo contra infecciones.
-- **Relevancia:** Aunque no están infectados por el parásito de la malaria, pueden aparecer en las imágenes de microscopio y deben diferenciarse de los trofozoítos.
+### **1. Magnificación (Factor de Aumento)**
+- **Definición:** Nivel de zoom aplicado en las imágenes histopatológicas (como 40X, 100X, 200X, 400X). La variación en los factores de aumento permite al modelo analizar características a diferentes escalas y mejorar la precisión de la clasificación.
 
-### **5. Esquizonte**
-- **Definición:** Etapa de multiplicación del parásito *Plasmodium* dentro de los glóbulos rojos.
-- **Importancia:** La detección de esquizontes puede ayudar a determinar la gravedad de la infección.
+### **1. Características Microscópicas de Tumores**
+- **Definición:** Rasgos visuales observados en las imágenes histopatológicas, como la disposición celular, tamaño de los núcleos y presencia de mitosis. Estas características son clave para entrenar al modelo de clasificación.
+### **1. Etiquetado de Imágenes**
+- **Definición:** Proceso de asignar una clase y tipo de tumor a cada imagen en el dataset. Este etiquetado es la base para que el modelo aprenda a asociar patrones visuales con categorías específicas.
 
-### **6. Gametocito**
-- **Definición:** Etapa del parásito *Plasmodium* que es transmitida al mosquito durante la picadura.
-- **Relevancia:** Aunque no es directamente responsable de los síntomas, su presencia indica que el parásito puede propagarse.
+### **1. Sensibilidad y Especificidad**
+- **Definición:**
+  - **Sensibilidad:** Capacidad del modelo para identificar correctamente las imágenes de tumores malignos.
+  - **Especificidad:** Capacidad del modelo para clasificar correctamente las imágenes de tumores benignos.
+- Ambas métricas son críticas para evaluar el rendimiento del modelo.
 
-### **7. Plasmodium**
-- **Definición:** Género de parásitos protozoarios que causan la malaria. Las especies más comunes son:
-  - *Plasmodium falciparum*: Responsable de la mayoría de los casos graves de malaria.
-  - *Plasmodium vivax*: Causa una forma recurrente de malaria.
-  - *Plasmodium malariae*: Asociado con infecciones crónicas.
-  - *Plasmodium ovale*: Rara, pero también causa recurrencias.
-  - *Plasmodium knowlesi*: Zoonótica, transmitida principalmente de macacos.
-
-### **8. Frotis Sanguíneo**
-- **Definición:** Técnica de laboratorio en la que una muestra de sangre se extiende sobre un portaobjetos y se tiñe para examinarla bajo un microscopio.
-- **Uso en la malaria:** Es el método estándar para detectar y cuantificar parásitos de la malaria.
-
-### **9. Tinción de Giemsa**
-- **Definición:** Método de tinción utilizado para resaltar los parásitos en los glóbulos rojos durante un examen microscópico.
-- **Importancia:** Ayuda a diferenciar entre las etapas del parásito *Plasmodium* y otras estructuras celulares.
-
-### **10. Parasitología**
-- **Definición:** Rama de la biología que estudia los parásitos y sus interacciones con los hospedadores.
-- **Relevancia:** Es la base científica para el diagnóstico y tratamiento de la malaria.
+### **1. Lesión Premaligna**
+- **Definición:** Cambios celulares que aún no son malignos pero presentan un riesgo elevado de convertirse en cáncer. Su identificación precisa es importante para la detección temprana y la intervención.
+### **1. Métodos de Biopsia**
+- **Definición:** Procedimientos para obtener muestras de tejido mamario, como la biopsia excisional (SOB). Estas muestras se utilizan para crear las imágenes histopatológicas empleadas en el modelo de clasificación.
+### **1. Red Neuronal Convolucional (CNN)**
+- **Definición:** Arquitectura de redes neuronales artificiales diseñada específicamente para procesar datos con estructuras de cuadrícula, como imágenes. Utiliza operaciones de convolución para extraer automáticamente características relevantes.
+### **1. Clasificación Binaria**
+- **Definición:** Tarea de aprendizaje automático en la que el modelo clasifica los datos en una de dos categorías, como "maligno" o "benigno".
+### **1. Tumor Maligno**
+- **Definición:** Crecimiento anormal de células que puede invadir tejidos cercanos y propagarse a otras partes del cuerpo.
+- **Importancia:** Representa una amenaza significativa para la salud debido a su capacidad de invadir órganos vitales y diseminarse (metástasis), lo que puede conducir a complicaciones graves e incluso la muerte. Su identificación temprana y tratamiento adecuado son esenciales para mejorar los resultados clínicos.
+### **1. Tumor Benigno**
+- **Definición:** Masa celular no cancerosa que no invade tejidos circundantes ni se disemina a otras áreas del cuerpo.
+- **Importancia:** Aunque no representa un riesgo directo de metástasis como los tumores malignos, su crecimiento puede causar complicaciones dependiendo de su tamaño y ubicación, como presión sobre órganos o estructuras cercanas. Además, algunos tumores benignos tienen el potencial de transformarse en malignos, lo que resalta la importancia de su monitoreo y tratamiento oportuno.
+### **1. Dataset**
+Definición: Conjunto estructurado de datos utilizado para entrenar y evaluar el modelo de clasificación.
+### **1. Entrenamiento**
+- **Definición:** Proceso mediante el cual la red neuronal aprende patrones en los datos de entrada ajustando los pesos de sus conexiones a través de algoritmos de optimización.
+### **1. Validación**
+- **Definición:** Proceso de evaluación del rendimiento del modelo en un conjunto de datos separado del de entrenamiento, utilizado para prevenir el sobreajuste y medir la capacidad de generalización.
+### **1. Sobreajuste (Overfitting)**
+- **Definición:** Situación en la que un modelo se adapta demasiado a los datos de entrenamiento, lo que deteriora su desempeño en datos nuevos o no vistos.
+### **1. Precisión (Accuracy)**
+- **Definición:** Métrica de evaluación del desempeño de un clasificador, definida como la proporción de clasificaciones correctas entre el total de clasificaciones realizadas.
+### **1. Tasa de Falsos Positivos (False Positive Rate)**
+- **Definición:** Proporción de casos benignos que son clasificados incorrectamente como malignos.
+### **1. Tasa de Falsos Negativos (False Negative Rate)**
+- **Definición:** Proporción de casos malignos que son clasificados incorrectamente como benignos.
+### **1. Keras**
+- **Definición:** Biblioteca de alto nivel en Python diseñada para construir y entrenar modelos de aprendizaje profundo de manera sencilla e intuitiva.
+### **1. TensorFlow**
+- **Definición:** Plataforma de código abierto para construir, entrenar y desplegar modelos de aprendizaje automático y redes neuronales profundas.
 
