@@ -1,11 +1,12 @@
 # Memoria Técnica
 
 ## Portada
-- **Nombre del Proyecto**: Clasificador de Malaria
-- **Fecha**: 21 de noviembre de 2024.
+- **Nombre del Proyecto**: Detector Automatizado de Tumores Cáncer de Mama con Redes Neuronales Convolucionales
+- **Fecha**: 5 de diciembre de 2024.
 - **Integrantes**:  
-  - Francisco Perez Carbajal
-  - Jose Eduardo Rodriguez Barrios
+  - Leslie Guadalupe Pérez Montes
+  - Marían de los Ángeles Partida Contreras
+- José Emanuel Tellez Soto
 
 ![Mosquito](../images/descarga.jpeg)
 
