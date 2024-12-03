@@ -22,8 +22,6 @@
 
 **Breast Cancer Histopathological Database (BreakHis)** fue desarrollada en colaboración con el Laboratorio de Investigación y Desarrollo en Anatomía Patológica y Citopatología de Paraná, Brasil, ofrece una herramienta valiosa para investigadores interesados en la evaluación y el desarrollo de nuevas metodologías para el análisis y diagnóstico del cáncer de mama.
 
-## Aplicación del modelo
-Mencionar aplicaciones. 
 
 ## Objetivo del Proyecto
 
@@ -50,6 +48,25 @@ Procedimiento_Clase_Tumoral_Tipo_Tumoral-Identificación_Paciente-Factor_Aumento
 - **Dimensiones del conjuto**:  Este dataset cuenta con un número considerable de imágenes, convirtiéndose en una base sólida para desarrollar y entrenar modelos de aprendizaje profundo y otras técnicas avanzadas de análisis de datos.
 
 Este proyecto ofrece una valiosa oportunidad para impulsar el desarrollo de soluciones tecnológicas innovadoras en la lucha contra el cáncer de mama, mejorando la precisión, eficiencia y rapidez en su diagnóstico y detección temprana.
+
+## Aplicación del modelo
+
+1. **Diagnóstico Automatizado del Cáncer de Mama:**
+Este modelo puede asistir a los patólogos identificando automáticamente si un tumor es benigno o maligno a partir de imágenes histopatológicas, reduciendo errores humanos y acelerando el proceso diagnóstico.
+1. **Soporte para la Toma de Decisiones Clínicas:**
+Al clasificar tipos específicos de tumores, nuestro modelo puede proporcionar información valiosa para determinar el tratamiento más adecuado, desde enfoques conservadores hasta terapias más agresivas.
+1. **Desarrollo de Software de Salud:**
+Integrar este modelo en sistemas de gestión hospitalaria o aplicaciones móviles para ofrecer una herramienta de diagnóstico complementario.
+1. **Investigación Biomédica:**
+Permitir la exploración de patrones en las imágenes histopatológicas, ayudando a descubrir características que podrían no ser evidentes para el ojo humano.
+1. **Avances en Inteligencia Artificial Médica:**
+El modelo puede servir como base para desarrollar algoritmos más complejos, como redes neuronales convolucionales más profundas o modelos multitarea, aplicables a otros tipos de cáncer o enfermedades.
+1. **Personalización del Tratamiento:**
+Con la clasificación detallada de tumores, los médicos podrían desarrollar planes de tratamiento personalizados basados en el tipo de tumor y su agresividad.
+1. **Reducción de Costos y Acceso Global:**
+En regiones con acceso limitado a patólogos expertos, este modelo puede servir como una herramienta económica para mejorar la detección y el tratamiento del cáncer de mama.
+1. **Simulaciones para Innovaciones Terapéuticas:**
+Proporcionar datos procesados para investigaciones en simulaciones computacionales de cómo los tumores podrían responder a nuevos medicamentos o tratamientos.
 
 ## Referencias
 
