@@ -44,28 +44,26 @@ El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de i
   - **images**.
     - `imagenes_benigno`: Imagenes benignas.
     - `imagenes_maligno`: Imagenes malignas. 
-    - Imagenes benignas: 1976
-    - Imagenes malignas: 4388
-    - Total de imagenes: 6364
+    - Total de imagenes: 7954
 ---
 
 ## Pipeline de Preparación
 ### 1. Crear Etiquetas Binarias
 - Clasificamos las imágenes basándonos en si son benignas o malignas.
-  ![Distribucion binaria](../images/proportion.png)
+  ![Distribucion binaria](../images/Proportion1.png)
 ### 2. División del Conjunto de Datos
-- Los datos se dividen en entrenamiento y validación con proporciones del 80% y 20% respectivamente.
+- Los datos se dividen en entrenamiento y validación con proporciones del 66% y 31% respectivamente.
 
   | Conjunto         | Cantidad de Imágenes |
   |-------------------|----------------------|
-  | Entrenamiento     | 2,197               |
-  | Validación        | 550                 |
+  | Entrenamiento     | 6364               |
+  | Validación        | 1590                 |
   
 
-  - **Total de imágenes:** 2,747
+  - **Total de imágenes:** 7954
   - **Etiquetas:**
-    - **malaria_SI:** 2,018 imágenes
-    - **malaria_NO:** 729 imágenes
+    - **Imagenes benignas:** 1976 imágenes
+    - **magenes malignas:** 4388 imágenes
 
 ### 3. Preprocesamiento
 Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
@@ -82,27 +80,30 @@ Cuando una clase tiene más ejemplos que otra, el modelo puede inclinarse a favo
 
 
 
-## Construcción del modelo
+## Construcción del MODELO 1
 
-La red que construiremos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales para identificar trofozoítos, glóbulos blancos y otras estructuras relevantes en las imágenes de microscopio.
+La red que construiremos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales identificar tumores malignos y benignos en muestras de tejido mamario.
 
+Este fue el primer modelo que hicimos. El cual tiene tres capas convolucionales y tiene una función de perdida.
 ### Aquitectura
 
 | **Layer (type)**           | **Output Shape**         | **Param #** |
 |----------------------------|--------------------------|-------------|
-| `input_1 (InputLayer)`     | (None, 224, 224, 3)     | 0           |
-| `conv2d (Conv2D)`          | (None, 222, 222, 32)    | 896         |
-| `max_pooling2d (MaxPooling2D)` | (None, 111, 111, 32)    | 0           |
-| `conv2d_1 (Conv2D)`        | (None, 109, 109, 32)    | 9,248       |
-| `max_pooling2d_1 (MaxPooling2D)` | (None, 54, 54, 32)     | 0           |
-| `conv2d_2 (Conv2D)`        | (None, 52, 52, 64)      | 18,496      |
-| `flatten (Flatten)`        | (None, 173056)          | 0           |
-| `dense (Dense)`            | (None, 128)             | 22,151,136  |
-| `dense_1 (Dense)`          | (None, 1)               | 129         |
+| `rescaling (Rescaling)`     | (None, 224, 224, 3)     | 0           |
+| `conv2d (Conv2D)`          | (None, 224, 224, 16)    | 448         |
+| `max_pooling2d (MaxPooling2D)` | (None, 112, 112, 16)    | 0           |
+| `conv2d_1 (Conv2D)`        | (None, 112, 112, 32)    | 4,460       |
+| `max_pooling2d_1 (MaxPooling2D)` | (None, 56, 56, 32)     | 0           |
+| `conv2d_2 (Conv2D)`        | (None, 56, 56, 64)      | 18,496      |
+| `max_pooling2d_2 (MaxPooling2D)`        | (28,28, 64)          | 0           |
+| `dropout (Dropout)`          | (28,28, 64)               | 0         |
+| `flatten (Flatten)`            | (None, 50176)             | 0  |
+| `dense (Dense)`          | (None, 128)               | 6,422,656         |
+| `dense_1 (Dense)`          | (None, 2)               | 258         |
 
 #### **Totales**
-- **Total params:** 22,179,905
-- **Trainable params:** 22,179,905
+- **Total params:** 6,446,498
+- **Trainable params:** 6,446,498
 - **Non-trainable params:** 0
 
 ### Funcionamiento del Modelo
@@ -110,16 +111,13 @@ La red que construiremos se basa en una arquitectura de **red neuronal convoluci
 1. Las capas de MaxPooling reducen las dimensiones de las características.
 1. La capa de Flatten transforma los datos en un vector plano.
 1. Las capas densas realizan la clasificación basada en las características extraídas.
-1. Capa de salida. Una sola neurona con una función de activación sigmoide produce una probabilidad entre 0 y 1, indicando si la imagen pertenece a la clase positiva (`Malaria_SI`).
+1. Capa de salida. Una sola neurona con una función de activación sigmoide produce una probabilidad entre 0 y 1.
 
 ### Justificación 
 
-Esta red es adecuada para la tarea de clasificación de malaria porque:
+Esta red no es adecuada para la tarea de clasificación de tumores benignos y malignos porque:
 
-- Extrae características relevantes de las imágenes.
-- Reduce la dimensionalidad de manera eficiente.
-- Se adapta bien a problemas de clasificación binaria.
-- Tiene una estructura simple y eficiente que puede ser mejorada según las necesidades del problema.
+- Tiene solo tres capas convolucionales y tiene una función de pérdida
 
 ## Resultados modelo
 
