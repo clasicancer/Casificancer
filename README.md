@@ -20,7 +20,7 @@
 
 ## Contexto
 
-**Breast Cancer Histopathological Database (BreakHis)** fue desarrollada en colaboración con el Laboratorio de Investigación y Desarrollo en Anatomía Patológica y Citopatología de Paraná, Brasil, ofrece una herramienta valiosa para investigadores interesados en la evaluación y el desarrollo de nuevas metodologías para el análisis y diagnóstico del cáncer de mama.
+**Breast Cancer Histopathological Database (BreakHis)** fue desarrollada en colaboración con el Laboratorio de Investigación y Desarrollo en Anatomía Patológica y Citopatología de Paraná, Brasil y ofrece una herramienta valiosa para investigadores interesados en la evaluación y el desarrollo de nuevas metodologías para el análisis y diagnóstico del cáncer de mama.
 
 
 ## Objetivo del Proyecto
