@@ -38,6 +38,173 @@ Los avances en inteligencia artificial, particularmente en deep learning, han ab
 
 ## Fuentes de información y procedimientos aplicados
 
+### **MODELO 1**
+El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos y carpetas:
+
+- **images**.
+  - Imagenes benignas: 1976
+  - Imagenes malignas: 4388
+  - Total de imagenes: 6364
+  - `imagenes_benigno`: Imagenes benignas.
+  - `imagenes_maligno`: Imagenes malignas.
+  - `class`: Clase de la imagen (e.g., bening, para benignas).
+
+  ### Creación de la red neuronal 1
+  Este fue el primer modelo que hicimos. El cual tiene tres capas convolucionales y tiene una función de perdida.
+  - **Estructura del modelo:**
+  
+
+### Distribución de Clases en Train.csv
+
+La gráfica a continuación muestra la distribución de las clases en el conjunto de entrenamiento:
+
+![Distribución Original de Clases](../images/original_distribution.png)
+
+### Observaciones:
+- `Trophozoite` tiene la mayoría de los registros.
+- Las otras clases, `NEG` y `WBC`, tienen menos ejemplos en comparación.
+- Combinaciones: 
+  - No hay imágenes que contengan las tres clases simultáneamente.
+  - La combinación más común es Trophozoite y WBC, mientras que no hay combinaciones que incluyan NEG con otra clase.
+  - Una proporción significativa de imágenes tiene solo una clase (Trophozoite, WBC, o NEG).
+
+![Combinaciones](../images/combinaciones.png)
+
+## Ejemplo de Imágenes con Bounding Boxes
+
+Los **bounding box coordinates** son valores que definen un rectángulo alrededor de un objeto de interés dentro de una imagen. Este rectángulo se utiliza comúnmente en tareas de visión por computadora, como la detección de objetos, para localizar y delimitar objetos específicos dentro de una imagen.
+
+Las imágenes a continuación muestran ejemplos del conjunto de datos con sus respectivas bounding boxes dibujadas.
+
+### Ejemplo 1: Imagen `id_q18tfhfneh.jpg`
+![id_q18tfhfneh](../images/id_q18tfhfneh_marked.jpg)
+
+### Ejemplo 2: Imagen `id_zz4ga0557e.jpg`
+![id_zz4ga0557e](../images/id_zz4ga0557e_marked.jpg)
+
+### Ejemplo 3: Imagen `id_2pye2ftpl6.jpg`
+![id_2pye2ftpl6](../images/id_2pye2ftpl6_marked.jpg)
+
+---
+
+## Pipeline de Preparación
+### 1. Crear Etiquetas Binarias
+- Clasificamos las imágenes basándonos en si contienen al menos un trofozoíto.
+  ![Distribucion binaria](../images/proportion.png)
+### 2. División del Conjunto de Datos
+- Los datos se dividen en entrenamiento y validación con proporciones del 80% y 20% respectivamente.
+
+  | Conjunto         | Cantidad de Imágenes |
+  |-------------------|----------------------|
+  | Entrenamiento     | 2,197               |
+  | Validación        | 550                 |
+  
+
+  - **Total de imágenes:** 2,747
+  - **Etiquetas:**
+    - **malaria_SI:** 2,018 imágenes
+    - **malaria_NO:** 729 imágenes
+
+### 3. Preprocesamiento
+Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
+- **Escalado:** Los valores de los píxeles se convierten de `[0, 255]` a `[0, 1]`.
+
+### 4. Manejo de desequilibrio entre clases
+Cuando una clase tiene más ejemplos que otra, el modelo puede inclinarse a favorecer la clase más frecuente. Para evitarlo:
+
+1. Se calculan pesos de clase que equilibran la importancia de ambas clases.
+2. Estos pesospenalizan al modelo por cometer errores en la clase menos representada.
+
+
+---
+
+
+
+## Construcción del modelo
+
+La red que construiremos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales para identificar trofozoítos, glóbulos blancos y otras estructuras relevantes en las imágenes de microscopio.
+
+### Aquitectura
+
+| **Layer (type)**           | **Output Shape**         | **Param #** |
+|----------------------------|--------------------------|-------------|
+| `input_1 (InputLayer)`     | (None, 224, 224, 3)     | 0           |
+| `conv2d (Conv2D)`          | (None, 222, 222, 32)    | 896         |
+| `max_pooling2d (MaxPooling2D)` | (None, 111, 111, 32)    | 0           |
+| `conv2d_1 (Conv2D)`        | (None, 109, 109, 32)    | 9,248       |
+| `max_pooling2d_1 (MaxPooling2D)` | (None, 54, 54, 32)     | 0           |
+| `conv2d_2 (Conv2D)`        | (None, 52, 52, 64)      | 18,496      |
+| `flatten (Flatten)`        | (None, 173056)          | 0           |
+| `dense (Dense)`            | (None, 128)             | 22,151,136  |
+| `dense_1 (Dense)`          | (None, 1)               | 129         |
+
+#### **Totales**
+- **Total params:** 22,179,905
+- **Trainable params:** 22,179,905
+- **Non-trainable params:** 0
+
+### Funcionamiento del Modelo
+1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
+1. Las capas de MaxPooling reducen las dimensiones de las características.
+1. La capa de Flatten transforma los datos en un vector plano.
+1. Las capas densas realizan la clasificación basada en las características extraídas.
+1. Capa de salida. Una sola neurona con una función de activación sigmoide produce una probabilidad entre 0 y 1, indicando si la imagen pertenece a la clase positiva (`Malaria_SI`).
+
+### Justificación 
+
+Esta red es adecuada para la tarea de clasificación de malaria porque:
+
+- Extrae características relevantes de las imágenes.
+- Reduce la dimensionalidad de manera eficiente.
+- Se adapta bien a problemas de clasificación binaria.
+- Tiene una estructura simple y eficiente que puede ser mejorada según las necesidades del problema.
+
+## Resultados modelo
+
+El modelo no muestra signos claros de sobreajuste, ya que las métricas de validación son similares a las de entrenamiento.
+
+![trainvstest](../images/trainVSval.png)
+
+### **Precisión (Accuracy)**:
+
+  - **Entrenamiento**: La precisión alcanza valores cercanos a 1.0 rápidamente, indicando un ajuste muy bueno a los datos de entrenamiento.
+  - **Validación**: La precisión de validación es alta (~0.97-0.99), pero muestra ligeras oscilaciones en algunas épocas, lo que puede deberse a variaciones en los datos o a la falta de estabilidad.
+
+### **Pérdida (Loss)**:
+
+- **Entrenamiento**: La pérdida disminuye consistentemente y se estabiliza en valores muy bajos (~0.01), lo que refleja que el modelo está aprendiendo adecuadamente.
+- **Validación**: La pérdida de validación es baja, pero fluctúa ligeramente a partir de la mitad del entrenamiento, lo que sugiere que el modelo podría beneficiarse de técnicas adicionales de regularización para mayor estabilidad.
+ 
+
+## Pruebas sobre el modelo
+
+### **Matriz de Confusión**
+
+![Matriz de confusión](../images/matrix.png)
+
+## **Métricas de Evaluación**
+
+### **1. Precisión (Precision)**
+De todas las predicciones como "Malaria", el 98.9% fueron correctas. Una alta precisión significa que el modelo tiene una baja tasa de falsos positivos
+
+### **2. Recall (Sensibilidad)**
+
+El modelo identificó correctamente el 99.8% de los casos de malaria. Esto es crucial en diagnósticos médicos, ya que minimiza los casos de malaria no detectados.
+
+### **3. F1-Score**
+
+Un F1-Score de 0.994 indica un balance excelente entre precisión y recall, lo que demuestra que el modelo es confiable y robusto para detectar malaria.
+
+## Conclusiones
+
+- El modelo tiene un excelente desempeño tanto en entrenamiento como en validación, y parece generalizar bien. Las oscilaciones en las métricas pueden abordarse con pequeños ajustes, pero no afectan significativamente el rendimiento general.
+
+- El modelo es altamente efectivo para detectar malaria en imágenes, con métricas que reflejan una excelente precisión y sensibilidad. Este rendimiento lo hace adecuado para aplicaciones en entornos clínicos, donde el diagnóstico rápido y preciso es crucial.
+
+### **Modelo 2**
+
+
+### Modelo 1
 El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos y carpetas:
 
 - **images**.
@@ -205,6 +372,8 @@ Un F1-Score de 0.994 indica un balance excelente entre precisión y recall, lo q
 - El modelo tiene un excelente desempeño tanto en entrenamiento como en validación, y parece generalizar bien. Las oscilaciones en las métricas pueden abordarse con pequeños ajustes, pero no afectan significativamente el rendimiento general.
 
 - El modelo es altamente efectivo para detectar malaria en imágenes, con métricas que reflejan una excelente precisión y sensibilidad. Este rendimiento lo hace adecuado para aplicaciones en entornos clínicos, donde el diagnóstico rápido y preciso es crucial.
+
+
 
 ## Conclusiones generales
 
