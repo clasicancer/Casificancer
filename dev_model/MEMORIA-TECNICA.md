@@ -226,67 +226,67 @@ Este proyecto demuestra cómo la inteligencia artificial puede revolucionar el d
 
 Este glosario proporciona una breve descripción de los términos relacionados con la clasificación de cáncer de mama utilizados en el proyecto.
 
-### **1.Cáncer de Mama**
+### **1. Cáncer de Mama**
 - **Definición:** El cáncer de mama es una enfermedad en la que las células del tejido mamario crecen de manera descontrolada, formando un tumor maligno que puede invadir tejidos cercanos o diseminarse a otras partes del cuerpo a través de la sangre o el sistema linfático.
 - **Importancia:** Es el tipo de cáncer más común entre las mujeres a nivel mundial, representando una causa significativa de mortalidad y morbilidad. La detección temprana y el tratamiento adecuado son esenciales para mejorar las tasas de supervivencia y reducir el impacto en la calidad de vida de las pacientes.
-### **1.Imágenes Histopatológicas**
+### **2. Imágenes Histopatológicas**
 - **Definición:** Las imágenes histopatológicas son representaciones visuales de cortes finos de tejido que han sido teñidos y observados bajo un microscopio. Estas imágenes permiten estudiar la arquitectura celular y tisular, identificando características relacionadas con enfermedades, como el cáncer.
 - **Importancia:** Son fundamentales en el diagnóstico y clasificación de enfermedades, ya que proporcionan información detallada sobre la estructura y comportamiento celular. En el caso del cáncer, estas imágenes permiten diferenciar entre tejidos normales, benignos y malignos, guiando decisiones clínicas y estrategias de tratamiento.
-### **1.Clasificación de Imágenes**
+### **3. Clasificación de Imágenes**
 - **Definición:** Proceso automatizado en el que un modelo de aprendizaje profundo, como una red neuronal convolucional (CNN), categoriza imágenes en clases específicas, como "maligno" o "benigno", basándose en patrones detectados en los datos visuales.
-### **1. Histología Mamaria**
+### **4. Histología Mamaria**
 - **Definición:** Estudio de la estructura microscópica de los tejidos mamarios. Permite identificar diferencias clave entre tejidos normales, benignos y malignos, lo cual es crucial para el entrenamiento de modelos de clasificación.
 
-### **1. Tipos Histológicos de Tumores Mamarios**
+### **5. Tipos Histológicos de Tumores Mamarios**
 - **Definición:** Clasificación de los tumores según la apariencia de las células bajo el microscopio. Ejemplos incluyen adenosis, fibroadenoma, carcinoma ductal y carcinoma lobular. Estas categorías son las etiquetas utilizadas en los modelos de clasificación de imágenes.
 
-### **1. Datos de Entrenamiento**
+### **6. Datos de Entrenamiento**
 - **Definición:** Conjunto de imágenes histopatológicas anotadas con información sobre la clase y tipo de tumor. Es esencial para que el modelo aprenda a diferenciar entre tumores benignos y malignos.
 
-### **1. Magnificación (Factor de Aumento)**
+### **7. Magnificación (Factor de Aumento)**
 - **Definición:** Nivel de zoom aplicado en las imágenes histopatológicas (como 40X, 100X, 200X, 400X). La variación en los factores de aumento permite al modelo analizar características a diferentes escalas y mejorar la precisión de la clasificación.
 
-### **1. Características Microscópicas de Tumores**
+### **8. Características Microscópicas de Tumores**
 - **Definición:** Rasgos visuales observados en las imágenes histopatológicas, como la disposición celular, tamaño de los núcleos y presencia de mitosis. Estas características son clave para entrenar al modelo de clasificación.
-### **1. Etiquetado de Imágenes**
+### **9. Etiquetado de Imágenes**
 - **Definición:** Proceso de asignar una clase y tipo de tumor a cada imagen en el dataset. Este etiquetado es la base para que el modelo aprenda a asociar patrones visuales con categorías específicas.
 
-### **1. Sensibilidad y Especificidad**
+### **10. Sensibilidad y Especificidad**
 - **Definición:**
   - **Sensibilidad:** Capacidad del modelo para identificar correctamente las imágenes de tumores malignos.
   - **Especificidad:** Capacidad del modelo para clasificar correctamente las imágenes de tumores benignos.
 - Ambas métricas son críticas para evaluar el rendimiento del modelo.
 
-### **1. Lesión Premaligna**
+### **11. Lesión Premaligna**
 - **Definición:** Cambios celulares que aún no son malignos pero presentan un riesgo elevado de convertirse en cáncer. Su identificación precisa es importante para la detección temprana y la intervención.
-### **1. Métodos de Biopsia**
+### **12. Métodos de Biopsia**
 - **Definición:** Procedimientos para obtener muestras de tejido mamario, como la biopsia excisional (SOB). Estas muestras se utilizan para crear las imágenes histopatológicas empleadas en el modelo de clasificación.
-### **1. Red Neuronal Convolucional (CNN)**
+### **13. Red Neuronal Convolucional (CNN)**
 - **Definición:** Arquitectura de redes neuronales artificiales diseñada específicamente para procesar datos con estructuras de cuadrícula, como imágenes. Utiliza operaciones de convolución para extraer automáticamente características relevantes.
-### **1. Clasificación Binaria**
+### **14. Clasificación Binaria**
 - **Definición:** Tarea de aprendizaje automático en la que el modelo clasifica los datos en una de dos categorías, como "maligno" o "benigno".
-### **1. Tumor Maligno**
+### **15. Tumor Maligno**
 - **Definición:** Crecimiento anormal de células que puede invadir tejidos cercanos y propagarse a otras partes del cuerpo.
 - **Importancia:** Representa una amenaza significativa para la salud debido a su capacidad de invadir órganos vitales y diseminarse (metástasis), lo que puede conducir a complicaciones graves e incluso la muerte. Su identificación temprana y tratamiento adecuado son esenciales para mejorar los resultados clínicos.
-### **1. Tumor Benigno**
+### **16. Tumor Benigno**
 - **Definición:** Masa celular no cancerosa que no invade tejidos circundantes ni se disemina a otras áreas del cuerpo.
 - **Importancia:** Aunque no representa un riesgo directo de metástasis como los tumores malignos, su crecimiento puede causar complicaciones dependiendo de su tamaño y ubicación, como presión sobre órganos o estructuras cercanas. Además, algunos tumores benignos tienen el potencial de transformarse en malignos, lo que resalta la importancia de su monitoreo y tratamiento oportuno.
-### **1. Dataset**
+### **17. Dataset**
 Definición: Conjunto estructurado de datos utilizado para entrenar y evaluar el modelo de clasificación.
-### **1. Entrenamiento**
+### **18. Entrenamiento**
 - **Definición:** Proceso mediante el cual la red neuronal aprende patrones en los datos de entrada ajustando los pesos de sus conexiones a través de algoritmos de optimización.
-### **1. Validación**
+### **19. Validación**
 - **Definición:** Proceso de evaluación del rendimiento del modelo en un conjunto de datos separado del de entrenamiento, utilizado para prevenir el sobreajuste y medir la capacidad de generalización.
-### **1. Sobreajuste (Overfitting)**
+### **20. Sobreajuste (Overfitting)**
 - **Definición:** Situación en la que un modelo se adapta demasiado a los datos de entrenamiento, lo que deteriora su desempeño en datos nuevos o no vistos.
-### **1. Precisión (Accuracy)**
+### **21. Precisión (Accuracy)**
 - **Definición:** Métrica de evaluación del desempeño de un clasificador, definida como la proporción de clasificaciones correctas entre el total de clasificaciones realizadas.
-### **1. Tasa de Falsos Positivos (False Positive Rate)**
+### **22. Tasa de Falsos Positivos (False Positive Rate)**
 - **Definición:** Proporción de casos benignos que son clasificados incorrectamente como malignos.
-### **1. Tasa de Falsos Negativos (False Negative Rate)**
+### **23. Tasa de Falsos Negativos (False Negative Rate)**
 - **Definición:** Proporción de casos malignos que son clasificados incorrectamente como benignos.
-### **1. Keras**
+### **24. Keras**
 - **Definición:** Biblioteca de alto nivel en Python diseñada para construir y entrenar modelos de aprendizaje profundo de manera sencilla e intuitiva.
-### **1. TensorFlow**
+### **25. TensorFlow**
 - **Definición:** Plataforma de código abierto para construir, entrenar y desplegar modelos de aprendizaje automático y redes neuronales profundas.
 
