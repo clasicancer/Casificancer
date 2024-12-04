@@ -39,57 +39,19 @@ Los avances en inteligencia artificial, particularmente en deep learning, han ab
 ## Fuentes de información y procedimientos aplicados
 
 ### **MODELO 1**
-El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos y carpetas:
+El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos:
 
-- **images**.
-  - Imagenes benignas: 1976
-  - Imagenes malignas: 4388
-  - Total de imagenes: 6364
-  - `imagenes_benigno`: Imagenes benignas.
-  - `imagenes_maligno`: Imagenes malignas.
-  - `class`: Clase de la imagen (e.g., bening, para benignas).
-
-  ### Creación de la red neuronal 1
-  Este fue el primer modelo que hicimos. El cual tiene tres capas convolucionales y tiene una función de perdida.
-  - **Estructura del modelo:**
-  
-
-### Distribución de Clases en Train.csv
-
-La gráfica a continuación muestra la distribución de las clases en el conjunto de entrenamiento:
-
-![Distribución Original de Clases](../images/original_distribution.png)
-
-### Observaciones:
-- `Trophozoite` tiene la mayoría de los registros.
-- Las otras clases, `NEG` y `WBC`, tienen menos ejemplos en comparación.
-- Combinaciones: 
-  - No hay imágenes que contengan las tres clases simultáneamente.
-  - La combinación más común es Trophozoite y WBC, mientras que no hay combinaciones que incluyan NEG con otra clase.
-  - Una proporción significativa de imágenes tiene solo una clase (Trophozoite, WBC, o NEG).
-
-![Combinaciones](../images/combinaciones.png)
-
-## Ejemplo de Imágenes con Bounding Boxes
-
-Los **bounding box coordinates** son valores que definen un rectángulo alrededor de un objeto de interés dentro de una imagen. Este rectángulo se utiliza comúnmente en tareas de visión por computadora, como la detección de objetos, para localizar y delimitar objetos específicos dentro de una imagen.
-
-Las imágenes a continuación muestran ejemplos del conjunto de datos con sus respectivas bounding boxes dibujadas.
-
-### Ejemplo 1: Imagen `id_q18tfhfneh.jpg`
-![id_q18tfhfneh](../images/id_q18tfhfneh_marked.jpg)
-
-### Ejemplo 2: Imagen `id_zz4ga0557e.jpg`
-![id_zz4ga0557e](../images/id_zz4ga0557e_marked.jpg)
-
-### Ejemplo 3: Imagen `id_2pye2ftpl6.jpg`
-![id_2pye2ftpl6](../images/id_2pye2ftpl6_marked.jpg)
-
+  - **images**.
+    - `imagenes_benigno`: Imagenes benignas.
+    - `imagenes_maligno`: Imagenes malignas. 
+    - Imagenes benignas: 1976
+    - Imagenes malignas: 4388
+    - Total de imagenes: 6364
 ---
 
 ## Pipeline de Preparación
 ### 1. Crear Etiquetas Binarias
-- Clasificamos las imágenes basándonos en si contienen al menos un trofozoíto.
+- Clasificamos las imágenes basándonos en si son benignas o malignas.
   ![Distribucion binaria](../images/proportion.png)
 ### 2. División del Conjunto de Datos
 - Los datos se dividen en entrenamiento y validación con proporciones del 80% y 20% respectivamente.
