@@ -79,7 +79,7 @@ docker rm id_contenedor
 ## Endpoints de la API
 
 ### POST /clasification_image
-**Descripción:** Clasifica una imagen para detectar malaria.
+**Descripción:** Clasifica una imagen en tumor maligno o tumor benigno.
 
 **Request Body:**
 - `img_base64` (string): Imagen codificada en Base64.
@@ -92,8 +92,8 @@ curl -X POST -H "Content-Type: application/json" -d '{"img_base64": "base64_stri
 **Response:**
 ```json
 {
-  "confidence": 0.98,
-  "predicted_class": "Sí malaria"
+  "exactitud": 0.98,
+  "predicted_class": "Benign"
 }
 ```
 
