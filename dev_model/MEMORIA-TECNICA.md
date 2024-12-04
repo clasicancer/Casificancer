@@ -44,7 +44,7 @@ El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de i
   - **images**.
     - `imagenes_benigno`: Imagenes benignas.
     - `imagenes_maligno`: Imagenes malignas. 
-    - Total de imagenes: 7954
+    - Total de imágenes: 7954
 ---
 
 ## Pipeline de Preparación
@@ -62,8 +62,8 @@ El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de i
 
   - **Total de imágenes:** 7954
   - **Etiquetas:**
-    - **Imagenes benignas:** 1976 imágenes
-    - **magenes malignas:** 4388 imágenes
+    - **Imágenes benignas:** 1976 imágenes
+    - **Imágenes malignas:** 4388 imágenes
 
 ### 3. Preprocesamiento
 Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
@@ -84,7 +84,7 @@ Cuando una clase tiene más ejemplos que otra, el modelo puede inclinarse a favo
 
 La red que construiremos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales identificar tumores malignos y benignos en muestras de tejido mamario.
 
-Este fue el primer modelo que hicimos. El cual tiene tres capas convolucionales y tiene una función de perdida.
+Este fue el primer modelo que hicimos, el cual tiene tres capas convolucionales y tiene una función de perdida.
 ### Aquitectura
 
 | **Layer (type)**           | **Output Shape**         | **Param #** |
@@ -121,18 +121,18 @@ Esta red no es adecuada para la tarea de clasificación de tumores benignos y ma
 
 ## Resultados modelo
 
-El modelo no muestra signos claros de sobreajuste, ya que las métricas de validación son similares a las de entrenamiento.
+El modelo muestra signos claros de sobreajuste.
 
-![trainvstest](../images/trainVSval.png)
+![trainvstest](../images/TrainVS.png)
 
 ### **Precisión (Accuracy)**:
 
-  - **Entrenamiento**: La precisión alcanza valores cercanos a 1.0 rápidamente, indicando un ajuste muy bueno a los datos de entrenamiento.
-  - **Validación**: La precisión de validación es alta (~0.97-0.99), pero muestra ligeras oscilaciones en algunas épocas, lo que puede deberse a variaciones en los datos o a la falta de estabilidad.
+  - **Entrenamiento**: La precisión no alcanza valores cercanos a 1.0 rápidamente, indicando un ajuste malo a los datos de entrenamiento.
+  - **Validación**: La precisión de validación es 0.8575.
 
 ### **Pérdida (Loss)**:
 
-- **Entrenamiento**: La pérdida disminuye consistentemente y se estabiliza en valores muy bajos (~0.01), lo que refleja que el modelo está aprendiendo adecuadamente.
+- **Entrenamiento**: La pérdida disminuye en 0.4052
 - **Validación**: La pérdida de validación es baja, pero fluctúa ligeramente a partir de la mitad del entrenamiento, lo que sugiere que el modelo podría beneficiarse de técnicas adicionales de regularización para mayor estabilidad.
  
 
