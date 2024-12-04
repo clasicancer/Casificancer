@@ -43,7 +43,8 @@ cd proyecto-malaria
 ## Carga del modelo
 
 El archivo de modelo necesario para ejecutar la API es bastante pesado y no está incluido directamente en el repositorio. Puedes descargarlo desde el siguiente enlace:
- 
+
+Poner links de los modelos 
 [Descargar modelo malaria_detection_model.h5](https://drive.google.com/file/d/1dDQc0MbJ7ISSx5R4_XZDaKuU0P8YSR7M/view?usp=sharing)
 
 Por favor, guarda el archivo en la ubicación indicada en la configuración del modelo (/app/malaria_detection_model.h5 si usas Docker).
@@ -53,13 +54,13 @@ Por favor, guarda el archivo en la ubicación indicada en la configuración del 
 ### Construcción de la Imagen
 Construye la imagen de Docker:
 ```bash
-docker build -t malaria-api .
+docker build -t cancer-api .
 ```
 
 ### Ejecución del Contenedor
 Inicia el contenedor con Docker:
 ```bash
-docker run -d -p 80:80 malaria-api
+docker run -d -p 80:80 cancer-api
 ```
 Accede a la API en `http://localhost:80/docs` para la documentación interactiva.
 

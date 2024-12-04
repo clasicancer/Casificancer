@@ -18,12 +18,12 @@ import numpy as np
 
 
 
-from models.malaria_classifier import MalariaClassifier  # Importa la clase del modelo
+from models.cancer_classifier import CancerClassifier  # Importa la clase del modelo
 from models.images import ImageData
 
 
 # Inicializa el clasificador
-classifier = MalariaClassifier("malaria_detection_model.h5")
+classifier = CancerClassifier("cancer_modelo_2.h5")
 
 # Inicializa API
 app = FastAPI()
@@ -38,7 +38,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/clasification_image", tags=["Clasificador de malaria"])
+@app.post("/clasification_image", tags=["Clasificador de cancer"])
 def upload_image(image_data: ImageData):
     try:
         # Decodificar la imagen Base64

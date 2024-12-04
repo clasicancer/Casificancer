@@ -3,7 +3,7 @@ import numpy as np
 from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
 
-class MalariaClassifier:
+class CancerClassifier:
     def __init__(self, model_path: str):
         """
         Inicializa el clasificador cargando el modelo.
@@ -30,8 +30,15 @@ class MalariaClassifier:
         :param img_array: Imagen preprocesada como un array de NumPy.
         :return: Diccionario con el resultado de la predicción.
         """
-        prediction = self.model.predict(img_array).tolist()[0][0]
+        class_names = ['benign', 'malignant']
+        predictions = self.model.predict(img_array)
+        score = tf.nn.softmax(predictions[0])
+        print(
+            "Esta imagen parece ser {} con un {:.2f} % de exactitud."
+            .format(class_names[np.argmax(score)],100 * np.max(score))
+        )
+
         return {
-            "confidence": round(prediction, 2),
-            "predicted_class": "Sí malaria" if prediction > 0.5 else "No malaria"
+            "exactitud": round(100 * np.max(score),2),
+            "predicted_class": class_names[np.argmax(score)]
         }
