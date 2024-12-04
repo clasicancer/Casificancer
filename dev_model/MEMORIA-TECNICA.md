@@ -41,7 +41,7 @@ Los avances en inteligencia artificial, particularmente en deep learning, han ab
 El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos y carpetas:
 
 - **images**.
-Este directorio contiene las imágenes utilizadas para la tarea de clasificación. Incluye imágenes de células sanguíneas infectadas y no infectadas por malaria.
+Este directorio contiene las imágenes utilizadas para la tarea de clasificación. Incluye imágenes microscópicas de tejido tumoral de mama recogidas de 82 pacientes utilizando diferentes factores de aumento (40X, 100X, 200X y 400X).
 
 - **SampleSubmission.csv**.
 Este archivo es un ejemplo del formato esperado para las predicciones de clasificación.
@@ -53,9 +53,8 @@ Contiene información sobre las imágenes de prueba.
 Este archivo contiene los datos de entrenamiento, que son una lista de imágenes junto con sus etiquetas correspondientes. 
 
   - **Columnas:**
-    - `Image_ID`: Identificador único de las imágenes.
-    - `class`: Clase de la imagen (e.g., Trophozoite, NEG para negativos).
-    - `confidence`: Confianza asociada (en este caso, siempre 1.0).
+    - `Image_ID`: Cada nombre de archivo de imagen almacena información sobre la imagen en sí: método de biopsia del procedimiento, clase tumoral, tipo de tumor, identificación del paciente y factor de aumento.
+    - `class`: Clase de la imagen (e.g., bening, para benignas).
     - `ymin`, `xmin`, `ymax`, `xmax`: Coordenadas de un cuadro delimitador (bounding box) para objetos relevantes en la imagen.
 
   - **Cantidad de filas:** 23,530 entradas, pero solo 2,747 imágenes únicas (indicando múltiples objetos por imagen).
