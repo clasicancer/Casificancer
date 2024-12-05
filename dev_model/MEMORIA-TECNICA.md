@@ -347,14 +347,10 @@ La red que construimos se basa en una arquitectura de **red neuronal convolucion
   - **Parámetros entrenables:** `25,690,882`, que corresponden a las capas densas y posiblemente a las últimas capas de ResNet50 si se optó por *fine-tuning*.
 1. **Parámetros no entrenables:** `23,587,712`, provenientes de los pesos congelados de ResNet50 durante el entrenamiento.
 
-### Problemas 
-
-Esta red no es adecuada para la tarea de clasificación de tumores benignos y malignos porque:
-
+### Posibles desventajas 
 - El modelo tiene **25,690,882 parámetros entrenables**, lo que implica un alto costo computacional y una mayor probabilidad de sobreajuste si los datos de entrenamiento son limitados. 
 - La capacidad del modelo puede ser excesiva para el tamaño del dataset, especialmente si el número de imágenes es bajo, lo que podría llevar a un ajuste excesivo a los datos de entrenamiento.
 - **ResNet50 preentrenada** puede no estar perfectamente adaptada al dominio específico (imágenes de tumores), dado que está entrenada con imágenes generales de ImageNet.
-- Si el dataset presenta un desbalance significativo entre tumores benignos y malignos, la capa densa de salida puede favorecer la clase mayoritaria, incrementando los falsos negativos o falsos positivos. Esto es especialmente crítico en un contexto médico, donde los falsos negativos tienen un costo alto.
 - Como se utilizaron técinas de aumento de datos en este modelo para generar imágenes adicionales, nuestro modelo puede aprendar patrones no representativos de las imágenes reales que compromete su capacidad de generalización.
 - La ResNet50 tiene **23,587,712 parámetros no entrenables**, lo que, combinado con los parámetros entrenables, resulta en un modelo pesado (187.98 MB), lo que lleva a requerir GPUs de alto rendimiento para el entrenamiento.
 
@@ -367,13 +363,8 @@ El modelo muestra signos claros de sobreajuste.
 
 ### **Precisión (Accuracy)**:
 
-  - El modelo logra un incremento rápido en la exactitud de entrenamiento en las primeras épocas, lo que indica que está aprendiendo características significativas rápidamente.
-  - Por otro lado,  la exactitud de validación se estabiliza e incluso presenta un ligero descenso después de las primeras épocas lo que sugiere que el modelo comienza a generalizar peor.
-  - Este comportamiento sugiere que el modelo generaliza bien y presenta señales evidentes de sobreajuste (overfitting).
-
 ### **Pérdida (Loss)**:
-- La pérdida de entrenamiento disminuye considerablemente en las primeras épocas, lo que confirma que el modelo se ajusta bien a los datos de entrenamiento.
-- La pérdida de validación no disminuye de manera significativa después de la primera época y se mantiene en un nivel relativamente alto en comparación con la pérdida de entrenamiento esto nos indica un problema de sobreajuste.
+
  
 ## Pruebas sobre el modelo
 ### MODELO 3: *cancer_modelo_trans*
@@ -397,72 +388,16 @@ El principal objetivo es garantizar la detección efectiva de tumores malignos, 
 - **Alta sensibilidad en tumores malignos:** Con un F1-score específico de aproximadamente 0.91 para la clase maligna, se asegura una detección confiable de los casos de cáncer maligno en las imágenes, minimizando falsos negativos. Esto es crucial en este contexto, ya que priorizar la detección de tumores malignos puede marcar la diferencia en el diagnóstico y tratamiento oportunos.
 
 ---
- 
-
-
-
-PARA MODELO FINAL 
-### Funcionamiento del Modelo
-1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
-1. Las capas de MaxPooling reducen las dimensiones de las características.
-1. La capa de Flatten transforma los datos en un vector plano.
-1. Las capas densas realizan la clasificación basada en las características extraídas.
-1. Capa de salida. Una sola neurona con una función de activación sigmoide produce una probabilidad entre 0 y 1, indicando si la imagen pertenece a la clase positiva (`Malaria_SI`).
-
-### Justificación 
-
-Esta red es adecuada para la tarea de clasificación de malaria porque:
-
-- Extrae características relevantes de las imágenes.
-- Reduce la dimensionalidad de manera eficiente.
-- Se adapta bien a problemas de clasificación binaria.
-- Tiene una estructura simple y eficiente que puede ser mejorada según las necesidades del problema.
-
-## Resultados modelo
-
-El modelo no muestra signos claros de sobreajuste, ya que las métricas de validación son similares a las de entrenamiento.
-
-![trainvstest](../images/trainVSval.png)
-
-### **Precisión (Accuracy)**:
-
-  - **Entrenamiento**: La precisión alcanza valores cercanos a 1.0 rápidamente, indicando un ajuste muy bueno a los datos de entrenamiento.
-  - **Validación**: La precisión de validación es alta (~0.97-0.99), pero muestra ligeras oscilaciones en algunas épocas, lo que puede deberse a variaciones en los datos o a la falta de estabilidad.
-
-### **Pérdida (Loss)**:
-
-- **Entrenamiento**: La pérdida disminuye consistentemente y se estabiliza en valores muy bajos (~0.01), lo que refleja que el modelo está aprendiendo adecuadamente.
-- **Validación**: La pérdida de validación es baja, pero fluctúa ligeramente a partir de la mitad del entrenamiento, lo que sugiere que el modelo podría beneficiarse de técnicas adicionales de regularización para mayor estabilidad.
- 
-
-## Pruebas sobre el modelo
-
-### **Matriz de Confusión**
-
-![Matriz de confusión](../images/matrix.png)
-
-## **Métricas de Evaluación**
-
-### **1. Precisión (Precision)**
-De todas las predicciones como "Malaria", el 98.9% fueron correctas. Una alta precisión significa que el modelo tiene una baja tasa de falsos positivos
-
-### **2. Recall (Sensibilidad)**
-
-El modelo identificó correctamente el 99.8% de los casos de malaria. Esto es crucial en diagnósticos médicos, ya que minimiza los casos de malaria no detectados.
-
-### **3. F1-Score**
-
-Un F1-Score de 0.994 indica un balance excelente entre precisión y recall, lo que demuestra que el modelo es confiable y robusto para detectar malaria.
-
-## Conclusiones
-
-- El modelo tiene un excelente desempeño tanto en entrenamiento como en validación, y parece generalizar bien. Las oscilaciones en las métricas pueden abordarse con pequeños ajustes, pero no afectan significativamente el rendimiento general.
-
-- El modelo es altamente efectivo para detectar malaria en imágenes, con métricas que reflejan una excelente precisión y sensibilidad. Este rendimiento lo hace adecuado para aplicaciones en entornos clínicos, donde el diagnóstico rápido y preciso es crucial.
-
 
 
 ## Conclusiones generales
+El modelo final fue seleccionado porque cumple con los objetivos principales del problema, priorizando la correcta detección de tumores malignos, que es crucial en este contexto clínico. En particular, el modelo destaca por las siguientes razones:
+
+- *Buen F1-score ponderado (~0.9):* Esto indica que el modelo mantiene un buen desempeño general, logrando un equilibrio adecuado entre precisión y recall en ambas clases. Esto sugiere que, de manera global, el modelo clasifica correctamente la mayoría de las imágenes.
+
+- *F1-score de ~0.91 en la clase maligna:* Este valor asegura que el modelo tiene una alta capacidad para identificar correctamente los tumores malignos, reduciendo significativamente los falsos negativos en esta clase crítica. Esto es esencial para minimizar el riesgo de que un tumor maligno pase desapercibido, lo cual es clínicamente prioritario.
+
+Nuestro modelo final combina un desempeño general robusto con un enfoque específico en la detección de tumores malignos, lo que lo convierte en la mejor opción para las necesidades y objetivos planteados en este problema de clasificación.
 
 El clasificador de imágenes histopatológicas del cáncer de mama basado en redes neuronales convolucionales constituye un avance crucial en la automatización del diagnóstico oncológico. Con un alto nivel de precisión y capacidad de generalización, este modelo puede optimizar la detección temprana y el manejo del cáncer de mama, mejorando significativamente la calidad del diagnóstico en contextos médicos, especialmente en regiones con recursos limitados y alta demanda de atención especializada.
 
