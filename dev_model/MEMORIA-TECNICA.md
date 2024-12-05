@@ -152,10 +152,6 @@ Con un F1-Score de 0.853 pensaríamos que nos indica un balance excelente entre 
 ---
 ### **Modelo 2.**
 Dados los problemas presentados en el modelo 1, se decidió hacer un nuevo modelo que fue entrenado con la distribución original de los datos.
-
-- El método para generar imágenes que se utilizó fue:
-![Metodo 2](../images/Mod-DA2.png)
-
   - **images**.
   Proporciones Iniciales (Usadas para entrenar los primeros dos modelos):
     - `imagenes_benigno`: Imagenes benignas.
