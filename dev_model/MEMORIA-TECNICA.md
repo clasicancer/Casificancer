@@ -301,9 +301,9 @@ La gráfica a continuación muestra la distribución de las clases, con un aumen
 
 - La proporción de 60% malignos y 40% benignos (o cercana) resulta más adecuada porque permite equilibrar la importancia clínica de los tumores malignos con la necesidad de incluir suficientes datos de tumores benignos para garantizar la generalización del modelo. 
 
-Dado que los falsos negativos en tumores malignos son significativamente más críticos, esta proporción asegura que el modelo cuente con suficiente información para identificar las características distintivas de los casos malignos. Al mismo tiempo, se preserva una representación considerable de tumores benignos, evitando que el modelo sesgue excesivamente sus predicciones hacia la clase mayoritaria, lo que podría comprometer su desempeño general. 
+- Dado que los falsos negativos en tumores malignos son significativamente más críticos, esta proporción asegura que el modelo cuente con suficiente información para identificar las características distintivas de los casos malignos. Al mismo tiempo, se preserva una representación considerable de tumores benignos, evitando que el modelo sesgue excesivamente sus predicciones hacia la clase mayoritaria, lo que podría comprometer su desempeño general. 
 
-Este enfoque facilita un análisis robusto y representativo, alineándose con la necesidad de minimizar errores clínicamente relevantes.
+- Este enfoque facilita un análisis robusto y representativo, alineándose con la necesidad de minimizar errores clínicamente relevantes.
 
 ---
 
