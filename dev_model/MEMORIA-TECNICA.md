@@ -128,7 +128,7 @@ El modelo muestra signos claros de sobreajuste.
 - **Entrenamiento**: La pérdida disminuye en 0.4052
  
 ## Pruebas sobre el modelo
-### Modelo 1: cancer_modelo_2
+### MODELO 1: *cancer_modelo_2*
 Primero, evaluamos con f1-score, de donde tenemos los siguientes resultados :
 
 - F1-Score (ponderado): 0.8533874660761027
@@ -244,7 +244,7 @@ El modelo muestra signos claros de sobreajuste.
 - **Entrenamiento**: La pérdida disminuye en 0.4261
  
 ## Pruebas sobre el modelo
-### Modelo 2: cancer_modelo_3
+### MODELO 2: *cancer_modelo_3*
 Primero, evaluamos con f1-score, de donde tenemos los siguientes resultados :
 
 - F1-Score (ponderado): 0.8488934160473666
@@ -280,14 +280,127 @@ Con un F1-Score de 0.84 pensaríamos que nos indica un balance excelente entre p
 ---
 ### **MODELO 3.**
 Dados los problemas presentados en el modelo 2, se decidió hacer un nuevo modelo.
-- **Áreas de mejora:**
-  - Investigar cuál sería un data Augmentation más significativo para el modelo. Qué tipo de transformaciones son mejores para imágenes de tumores, las que menos las afecten. 
-  - Encontrar el balance que más sentido haga para el contexto.
-  - Probar con otras técnicas para compensar el balance de clases: por ejemplo, en lugar de aumento de datos, se podría jugar con la asignación de pesos; qué tanto penaliza el modelo a la clase mayoritaria.
+- **images**.
+  Proporciones Iniciales (Usadas para entrenar los primeros dos modelos):
+    - `imagenes_benigno`: Imagenes benignas.
+    - `imagenes_maligno`: Imagenes malignas. 
+    - Total de imágenes: 8544
+La proporción de 60% malignos y 40% benignos (o cercana) resulta más adecuada porque permite equilibrar la importancia clínica de los tumores malignos con la necesidad de incluir suficientes datos de tumores benignos para garantizar la generalización del modelo. 
 
- 
+Dado que los falsos negativos en tumores malignos son significativamente más críticos, esta proporción asegura que el modelo cuente con suficiente información para identificar las características distintivas de los casos malignos. Al mismo tiempo, se preserva una representación considerable de tumores benignos, evitando que el modelo sesgue excesivamente sus predicciones hacia la clase mayoritaria, lo que podría comprometer su desempeño general. 
+
+Este enfoque facilita un análisis robusto y representativo, alineándose con la necesidad de minimizar errores clínicamente relevantes.
 
 ---
+
+### Distribución de original de clases
+
+La gráfica a continuación muestra la distribución de las clases, con un aumento 60-40:
+
+![Distribución Original de Clases](../images/Proportion3.png)
+
+- **Etiquetas:**
+    - **Imágenes benignas:** 3618 imágenes
+    - **Imágenes malignas:** 4926 imágenes
+    - **Total de imágenes:** 8544 imágenes
+---
+
+## Pipeline de Preparación
+### 1. Crear Etiquetas Binarias
+- Clasificamos las imágenes basándonos en tumor maligno o tumor benigno.
+
+### 3. Preprocesamiento
+Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
+- **Escalado:** Los valores de los píxeles se convierten de `[0, 255]` a `[0, 1]`.
+---
+## Construcción del modelo 3
+
+La red que construimos se basa en una arquitectura de **red neuronal convolucional (CNN)**.
+
+### Aquitectura
+
+| **Layer (type)**           | **Output Shape**         | **Param #** |
+|----------------------------|--------------------------|-------------|
+| `resnet50 (Functional) `     | (None, 7, 7, 2048)     | 23,587,712           |
+| `flatten_2 (Flatten)`          | (None, 100352)    | 0         |
+| `dense_4 (Dense)` | (None, 256)    | 0           |
+| `dropout_2 (Dropout)`        | (None, 256)    | 514       |
+| `dense_5 (Dense)` | (None, 56, 56, 64)     | 0           |
+
+
+#### **Totales**
+- **Total params:** 49,278,594
+- **Trainable params:** 25,690,882
+- **Non-trainable params:** 23,587,712
+
+### Funcionamiento del modelo 3
+1. **Capa Base (ResNet50):**
+  - La arquitectura preentrenada **ResNet50** sirve como extractor de características, utilizando pesos preentrenados en ImageNet.
+  - Produce un tensor de salida de forma (`7, 7, 2048`), que representa las características profundas extraídas de las imágenes.
+1. **Capa de Aplanamiento (Flatten):**
+  - La capa `flatten_2` convierte el tensor tridimensional de salida de ResNet50 en un vector unidimensional (`100352` valores) para ser procesado por las capas densas.
+1. **Capas Densas:**
+  - La primera capa densa (`dense_4`) tiene 256 neuronas y utiliza una función de activación ReLU para aprender combinaciones no lineales de las características extraídas.
+  - Se aplica una capa de Dropout (`dropout_2`) con una tasa de desactivación para prevenir el sobreajuste.
+  - La capa de salida (`dense_5`) tiene 2 neuronas con función de activación softmax para clasificar las imágenes en dos categorías (benigno y maligno), produciendo probabilidades para cada clase.
+1. **Parámetros Entrenables y no Entrenables:**
+  - **Parámetros entrenables:** `25,690,882`, que corresponden a las capas densas y posiblemente a las últimas capas de ResNet50 si se optó por *fine-tuning*.
+1. **Parámetros no entrenables:** `23,587,712`, provenientes de los pesos congelados de ResNet50 durante el entrenamiento.
+
+### Problemas 
+
+Esta red no es adecuada para la tarea de clasificación de tumores benignos y malignos porque:
+
+- El modelo tiene **25,690,882 parámetros entrenables**, lo que implica un alto costo computacional y una mayor probabilidad de sobreajuste si los datos de entrenamiento son limitados. 
+- La capacidad del modelo puede ser excesiva para el tamaño del dataset, especialmente si el número de imágenes es bajo, lo que podría llevar a un ajuste excesivo a los datos de entrenamiento.
+- **ResNet50 preentrenada** puede no estar perfectamente adaptada al dominio específico (imágenes de tumores), dado que está entrenada con imágenes generales de ImageNet.
+- Si el dataset presenta un desbalance significativo entre tumores benignos y malignos, la capa densa de salida puede favorecer la clase mayoritaria, incrementando los falsos negativos o falsos positivos. Esto es especialmente crítico en un contexto médico, donde los falsos negativos tienen un costo alto.
+- Como se utilizaron técinas de aumento de datos en este modelo para generar imágenes adicionales, nuestro modelo puede aprendar patrones no representativos de las imágenes reales que compromete su capacidad de generalización.
+- La ResNet50 tiene **23,587,712 parámetros no entrenables**, lo que, combinado con los parámetros entrenables, resulta en un modelo pesado (187.98 MB), lo que lleva a requerir GPUs de alto rendimiento para el entrenamiento.
+
+
+## Resultados modelo
+
+El modelo muestra signos claros de sobreajuste.
+
+![trainvstest](../images/TrainVS3.png)
+
+### **Precisión (Accuracy)**:
+
+  - El modelo logra un incremento rápido en la exactitud de entrenamiento en las primeras épocas, lo que indica que está aprendiendo características significativas rápidamente.
+  - Por otro lado,  la exactitud de validación se estabiliza e incluso presenta un ligero descenso después de las primeras épocas lo que sugiere que el modelo comienza a generalizar peor.
+  - Este comportamiento sugiere que el modelo generaliza bien y presenta señales evidentes de sobreajuste (overfitting).
+
+### **Pérdida (Loss)**:
+- La pérdida de entrenamiento disminuye considerablemente en las primeras épocas, lo que confirma que el modelo se ajusta bien a los datos de entrenamiento.
+- La pérdida de validación no disminuye de manera significativa después de la primera época y se mantiene en un nivel relativamente alto en comparación con la pérdida de entrenamiento esto nos indica un problema de sobreajuste.
+ 
+## Pruebas sobre el modelo
+### MODELO 3: *cancer_modelo_trans*
+Primero, evaluamos con f1-score, de donde tenemos los siguientes resultados :
+
+- F1-Score (ponderado): 0.8957454649837822
+- F1-Score para la clase 'benign': 0.87
+- F1-Score para la clase 'malignant': 0.91
+
+
+Del mismo modo, calculamos la curva ROC, junto con su AUC:
+![Curva roc](../images/Roc-curve-3.png)
+- Una curva ROC muy pegada a los ejes, así como un AUC ≈ 0.97. lo que señala que es nuestro mejor modelo 
+### **Matriz de Confusión**
+
+![Matriz de confusión](../images/Confusion-matrix-3.png)
+- matriz de confusión: Aunque detectamos Beningos como malignos, vemos que logramos reducir la cantidad de cáncer malignos que estaban clasificados como Beningos. Lo que quiere decir que cumplimos con nuestro objetivo
+## Conclusiones
+El principal objetivo es garantizar la detección efectiva de tumores malignos, dada su importancia clínica. A partir de los resultados del modelo final, se pueden destacar lo siguiente:
+- **Buen desempeño general**: El modelo alcanzó un F1-score ponderado de aproximadamente 0.9, lo que indica que, en términos generales, clasifica de manera precisa tanto tumores benignos como malignos.
+- **Alta sensibilidad en tumores malignos:** Con un F1-score específico de aproximadamente 0.91 para la clase maligna, se asegura una detección confiable de los casos de cáncer maligno en las imágenes, minimizando falsos negativos. Esto es crucial en este contexto, ya que priorizar la detección de tumores malignos puede marcar la diferencia en el diagnóstico y tratamiento oportunos.
+
+---
+ 
+
+
+
 PARA MODELO FINAL 
 ### Funcionamiento del Modelo
 1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
