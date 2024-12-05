@@ -42,6 +42,7 @@ Los avances en inteligencia artificial, particularmente en deep learning, han ab
 El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos:
 
   - **images**.
+  Proporciones Iniciales (Usadas para entrenar los primeros dos modelos):
     - `imagenes_benigno`: Imagenes benignas.
     - `imagenes_maligno`: Imagenes malignas. 
     - Total de imágenes: 7954
@@ -49,7 +50,7 @@ El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de i
 
 ## Pipeline de Preparación
 ### 1. Crear Etiquetas Binarias
-- Clasificamos las imágenes basándonos en si son benignas o malignas.
+- Clasificamos las imágenes basándonos en si son benignas o malignas, su distribución:
   ![Distribucion binaria](../images/Proportion1.png)
 ### 2. División del Conjunto de Datos
 - Los datos se dividen en entrenamiento y validación con proporciones del 66% y 31% respectivamente.
@@ -69,20 +70,9 @@ El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de i
 Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
 - **Escalado:** Los valores de los píxeles se convierten de `[0, 255]` a `[0, 1]`.
 
-### 4. Manejo de desequilibrio entre clases
-Cuando una clase tiene más ejemplos que otra, el modelo puede inclinarse a favorecer la clase más frecuente. Para evitarlo:
-
-1. Se calculan pesos de clase que equilibran la importancia de ambas clases.
-2. Estos pesospenalizan al modelo por cometer errores en la clase menos representada.
-
-
----
-
-
-
 ## Construcción del MODELO 1
 
-La red que construiremos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales identificar tumores malignos y benignos en muestras de tejido mamario.
+La red que construimos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales identificar tumores malignos y benignos en muestras de tejido mamario.
 
 Este fue el primer modelo que hicimos, el cual tiene tres capas convolucionales y tiene una función de perdida.
 ### Aquitectura
@@ -113,11 +103,14 @@ Este fue el primer modelo que hicimos, el cual tiene tres capas convolucionales 
 1. Las capas densas realizan la clasificación basada en las características extraídas.
 1. Capa de salida. Una sola neurona con una función de activación sigmoide produce una probabilidad entre 0 y 1.
 
-### Justificación 
+### Problemas 
 
 Esta red no es adecuada para la tarea de clasificación de tumores benignos y malignos porque:
 
-- Tiene solo tres capas convolucionales y tiene una función de pérdida
+- Tiene solo tres capas convolucionales y tiene una función de pérdida. 
+- Los modelos entrenados con esta proporción eran muy buenos clasificando tumores malignos. Lo que generaba una disminución de falsos negativos; lo cual en el contexto es muy bueno.
+- Los modelos eran “malos” clasificando tumores como benignos. Al haber tenido un mayor número de ejemplos malignos, los modelos trataban de “forzar” a clasificar las imágenes como tal; debido a que no aprendió lo suficiente de benignos para poder generalizar bien. Esto desembocó en tener muchos falsos positivos.
+
 
 ## Resultados modelo
 
@@ -133,96 +126,61 @@ El modelo muestra signos claros de sobreajuste.
 ### **Pérdida (Loss)**:
 
 - **Entrenamiento**: La pérdida disminuye en 0.4052
-- **Validación**: La pérdida de validación es baja, pero fluctúa ligeramente a partir de la mitad del entrenamiento, lo que sugiere que el modelo podría beneficiarse de técnicas adicionales de regularización para mayor estabilidad.
  
-
 ## Pruebas sobre el modelo
+### Modelo 1: cancer_modelo_2
+Primero, evaluamos con f1-score, de donde tenemos los siguientes resultados :
+
+F1-Score (ponderado): 0.8533874660761027
+F1-Score para la clase 'benign': 0.76
+F1-Score para la clase 'malignant': 0.90
+
+Del mismo modo, calculamos la curva ROC, junto con su AUC:
+![Curva roc](../images/Roc-curve-1.png)
 
 ### **Matriz de Confusión**
 
-![Matriz de confusión](../images/matrix.png)
-
-## **Métricas de Evaluación**
-
-### **1. Precisión (Precision)**
-De todas las predicciones como "Malaria", el 98.9% fueron correctas. Una alta precisión significa que el modelo tiene una baja tasa de falsos positivos
-
-### **2. Recall (Sensibilidad)**
-
-El modelo identificó correctamente el 99.8% de los casos de malaria. Esto es crucial en diagnósticos médicos, ya que minimiza los casos de malaria no detectados.
+![Matriz de confusión](../images/Confusion-matrix-1.png)
 
 ### **3. F1-Score**
 
-Un F1-Score de 0.994 indica un balance excelente entre precisión y recall, lo que demuestra que el modelo es confiable y robusto para detectar malaria.
+Con un F1-Score de 0.853 pensaríamos que nos indica un balance excelente entre precisión y recall; sin embargo los modelos eran “malos” clasificando tumores como benignos.
 
 ## Conclusiones
 
-- El modelo tiene un excelente desempeño tanto en entrenamiento como en validación, y parece generalizar bien. Las oscilaciones en las métricas pueden abordarse con pequeños ajustes, pero no afectan significativamente el rendimiento general.
+- Los modelos entrenados con esta proporción mostraron un alto rendimiento en la clasificación de tumores malignos, lo que resultó en una notable reducción de falsos negativos. Esto es particularmente beneficioso en el contexto clínico, ya que ayuda a minimizar el riesgo de no detectar casos malignos que podrían requerir atención inmediata. No obstante, los modelos tuvieron un desempeño limitado al clasificar tumores benignos. Esto se debe a la mayor cantidad de ejemplos de tumores malignos en el conjunto de entrenamiento, lo que llevó a que los modelos priorizaran esta categoría y "forzaran" la clasificación de imágenes como malignas. En consecuencia, el modelo no logró aprender lo suficiente sobre los tumores benignos, lo que resultó en un elevado número de falsos positivos. Esta desproporción evidencia la necesidad de un balance adecuado en los datos de entrenamiento para mejorar la capacidad de generalización del modelo.
 
-- El modelo es altamente efectivo para detectar malaria en imágenes, con métricas que reflejan una excelente precisión y sensibilidad. Este rendimiento lo hace adecuado para aplicaciones en entornos clínicos, donde el diagnóstico rápido y preciso es crucial.
+### **Modelo 2. Data Augmentatiton**
+Dados los problemas presentados en el modelo 1, se decidió hacer un un nueno modelo al que llamamos Data Augmentatiton (Utilizada para entrenar los demás modelos)
 
-### **Modelo 2**
+- El método para generar imágenes que se utilizó fue:
+![Metodo 2](../images/Mod-DA2.png)
 
+  - **images**.
+  Proporciones Iniciales (Usadas para entrenar los primeros dos modelos):
+    - `imagenes_benigno`: Imagenes benignas.
+    - `imagenes_maligno`: Imagenes malignas. 
+    - Total de imágenes: 8350
+---
 
-### Modelo 1
-El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos y carpetas:
+### Distribución de original de clases
 
-- **images**.
-Este directorio contiene las imágenes utilizadas para la tarea de clasificación. Incluye imágenes microscópicas de tejido tumoral de mama recogidas de 82 pacientes utilizando diferentes factores de aumento (40X, 100X, 200X y 400X).
+La gráfica a continuación muestra la distribución de las clases:
 
-- **SampleSubmission.csv**.
-Este archivo es un ejemplo del formato esperado para las predicciones de clasificación.
+![Distribución Original de Clases](../images/Proportion1.png)
 
-- **Test.csv**.
-Contiene información sobre las imágenes de prueba. 
-
-- **Train.csv**.
-Este archivo contiene los datos de entrenamiento, que son una lista de imágenes junto con sus etiquetas correspondientes. 
-
-  - **Columnas:**
-    - `Image_ID`: Cada nombre de archivo de imagen almacena información sobre la imagen en sí: método de biopsia del procedimiento, clase tumoral, tipo de tumor, identificación del paciente y factor de aumento.
-    - `class`: Clase de la imagen (e.g., bening, para benignas).
-    - `ymin`, `xmin`, `ymax`, `xmax`: Coordenadas de un cuadro delimitador (bounding box) para objetos relevantes en la imagen.
-
-  - **Cantidad de filas:** 23,530 entradas, pero solo 2,747 imágenes únicas (indicando múltiples objetos por imagen).
-
-### Distribución de Clases en Train.csv
-
-La gráfica a continuación muestra la distribución de las clases en el conjunto de entrenamiento:
-
-![Distribución Original de Clases](../images/original_distribution.png)
-
+### Distribución de ImageDataGenerator
+![Distribución Original de Clases](../images/Proportion2.png)
 ### Observaciones:
-- `Trophozoite` tiene la mayoría de los registros.
-- Las otras clases, `NEG` y `WBC`, tienen menos ejemplos en comparación.
-- Combinaciones: 
-  - No hay imágenes que contengan las tres clases simultáneamente.
-  - La combinación más común es Trophozoite y WBC, mientras que no hay combinaciones que incluyan NEG con otra clase.
-  - Una proporción significativa de imágenes tiene solo una clase (Trophozoite, WBC, o NEG).
-
-![Combinaciones](../images/combinaciones.png)
-
-## Ejemplo de Imágenes con Bounding Boxes
-
-Los **bounding box coordinates** son valores que definen un rectángulo alrededor de un objeto de interés dentro de una imagen. Este rectángulo se utiliza comúnmente en tareas de visión por computadora, como la detección de objetos, para localizar y delimitar objetos específicos dentro de una imagen.
-
-Las imágenes a continuación muestran ejemplos del conjunto de datos con sus respectivas bounding boxes dibujadas.
-
-### Ejemplo 1: Imagen `id_q18tfhfneh.jpg`
-![id_q18tfhfneh](../images/id_q18tfhfneh_marked.jpg)
-
-### Ejemplo 2: Imagen `id_zz4ga0557e.jpg`
-![id_zz4ga0557e](../images/id_zz4ga0557e_marked.jpg)
-
-### Ejemplo 3: Imagen `id_2pye2ftpl6.jpg`
-![id_2pye2ftpl6](../images/id_2pye2ftpl6_marked.jpg)
+- Total images: 8350
+- Images in class 'benign': 4392 (52.60%)
+- Images in class 'malignant': 3958 (47.40%)
 
 ---
 
 ## Pipeline de Preparación
 ### 1. Crear Etiquetas Binarias
-- Clasificamos las imágenes basándonos en si contienen al menos un trofozoíto.
-  ![Distribucion binaria](../images/proportion.png)
+- Clasificamos las imágenes basándonos en si son tumor maligno o tumor benigno.
 ### 2. División del Conjunto de Datos
 - Los datos se dividen en entrenamiento y validación con proporciones del 80% y 20% respectivamente.
 
@@ -240,41 +198,105 @@ Las imágenes a continuación muestran ejemplos del conjunto de datos con sus re
 ### 3. Preprocesamiento
 Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
 - **Escalado:** Los valores de los píxeles se convierten de `[0, 255]` a `[0, 1]`.
-
-### 4. Manejo de desequilibrio entre clases
-Cuando una clase tiene más ejemplos que otra, el modelo puede inclinarse a favorecer la clase más frecuente. Para evitarlo:
-
-1. Se calculan pesos de clase que equilibran la importancia de ambas clases.
-2. Estos pesospenalizan al modelo por cometer errores en la clase menos representada.
-
-
 ---
 
 
 
 ## Construcción del modelo
 
-La red que construiremos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales para identificar trofozoítos, glóbulos blancos y otras estructuras relevantes en las imágenes de microscopio.
+La red que construimos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales identificar tumores malignos y benignos en muestras de tejido mamario.
 
 ### Aquitectura
 
 | **Layer (type)**           | **Output Shape**         | **Param #** |
 |----------------------------|--------------------------|-------------|
-| `input_1 (InputLayer)`     | (None, 224, 224, 3)     | 0           |
-| `conv2d (Conv2D)`          | (None, 222, 222, 32)    | 896         |
-| `max_pooling2d (MaxPooling2D)` | (None, 111, 111, 32)    | 0           |
-| `conv2d_1 (Conv2D)`        | (None, 109, 109, 32)    | 9,248       |
-| `max_pooling2d_1 (MaxPooling2D)` | (None, 54, 54, 32)     | 0           |
-| `conv2d_2 (Conv2D)`        | (None, 52, 52, 64)      | 18,496      |
-| `flatten (Flatten)`        | (None, 173056)          | 0           |
-| `dense (Dense)`            | (None, 128)             | 22,151,136  |
-| `dense_1 (Dense)`          | (None, 1)               | 129         |
+| `rescaling_2 (Rescaling)`     | (None, 224, 224, 3)     | 0           |
+| `conv2d_6 (Conv2D)`          | (None, 224, 224, 64)    | 1,792         |
+| `max_pooling2d_6 (MaxPooling2D)` | (None, 112, 112, 64)    | 0           |
+| `conv2d_7 (Conv2D)`        | (None, 112, 112, 64)    | 36,928       |
+| `max_pooling2d_7 (MaxPooling2D)` | (None, 56, 56, 64)     | 0           |
+| `conv2d_8 (Conv2D)`        | (None, 56, 56, 64)      | 18,496      |
+| `max_pooling2d_8 (MaxPooling2D)`        |  (None, 28, 28, 64)     | 0      |
+| `dropout_2 (Dropout)`        | (None, 28, 28, 64)      | 18,496      |
+| `flatten_2 (Flatten)`        | (None, 50176)          | 0           |
+| `dense_4 (Dense)`            | (None, 128)             | 6,422,656  |
+| `dense_5 (Dense)`          | (None, 2)               | 258         |
 
 #### **Totales**
-- **Total params:** 22,179,905
-- **Trainable params:** 22,179,905
+- **Total params:** 6,498,562
+- **Trainable params:** 6,498,562
 - **Non-trainable params:** 0
 
+### Funcionamiento del Modelo
+1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
+1. Las capas de MaxPooling reducen las dimensiones de las características.
+1. La capa de Flatten transforma los datos en un vector plano.
+1. Las capas densas realizan la clasificación basada en las características extraídas.
+1. Capa de salida. Una sola neurona con una función de activación sigmoide produce una probabilidad entre 0 y 1.
+
+### Problemas 
+
+Esta red no es adecuada para la tarea de clasificación de tumores benignos y malignos porque:
+
+- Tiene solo tres capas convolucionales y tiene una función de pérdida. 
+- Se generó un aumento casi del 100% de las imágenes benignas que se tenían originalmente. Lo cual puede resultar peligroso si no se genera bien y comprometer la calidad de las imágenes generadas. Lo que se traduciría como meter mucho ruido al modelo o que este aprenda características de las imágenes modificadas que no tienen mucha relación con las imágenes originales.
+- Se invirtió la proporción, ahora la clase benigna es la predominante. Lo cual terminó por generar los mismos problemas que se describieron en la sección anterior, pero ahora con benignos.
+- Aumento de falsos negativos. Los modelos aprendían mejor a detectar los tumores benignos y eran muy erráticos con los tumores malignos. En este contexto eso es grave, pues interese muy precisos detectando verdaderos positivos.
+
+
+
+## Resultados modelo
+
+El modelo muestra signos claros de sobreajuste.
+
+![trainvstest](../images/TrainVS2.png)
+
+### **Precisión (Accuracy)**:
+
+  - La precisión en el conjunto de entrenamiento (línea azul) aumenta de manera constante con el número de épocas, indicando que el modelo está aprendiendo patrones de los datos.
+  - La precisión en el conjunto de validación (línea naranja) es relativamente estable con ligeras fluctuaciones, alcanzando valores similares o incluso superiores a la precisión del entrenamiento.
+  - Este comportamiento sugiere que el modelo generaliza bien y presenta señales evidentes de sobreajuste (overfitting).
+
+### **Pérdida (Loss)**:
+
+- **Entrenamiento**: La pérdida disminuye en 0.4261
+ 
+## Pruebas sobre el modelo
+### Modelo 2: cancer_modelo_3
+Primero, evaluamos con f1-score, de donde tenemos los siguientes resultados :
+
+- F1-Score (ponderado): 0.8488934160473666
+- F1-Score para la clase 'benign': 0.76
+- F1-Score para la clase 'malignant': 0.89
+
+
+Del mismo modo, calculamos la curva ROC, junto con su AUC:
+![Curva roc](../images/Curve-Roc-2.png)
+
+### **Matriz de Confusión**
+
+![Matriz de confusión](../images/Confusion-Matrix-2.png)
+
+### **3. F1-Score**
+
+Con un F1-Score de 0.84 pensaríamos que nos indica un balance excelente entre precisión y recall; sin embargo generaó los mismos problemas que se describieron en la sección anterior, pero ahora con benignos.
+
+## Conclusiones
+
+- El aumento artificial de imágenes benignas casi duplicó la cantidad original, pero esto introdujo varios desafíos importantes:
+
+1. **Riesgos de la generación de datos:**
+  - Si las imágenes generadas no tienen la calidad suficiente o presentan características irrelevantes respecto a las originales, el modelo puede aprender patrones incorrectos. Esto podría introducir ruido significativo, comprometiendo su capacidad para generalizar correctamente.
+2. **Desbalance de clases invertido:**
+  - Al invertir la proporción de las clases, la categoría benigna se volvió predominante, replicando los problemas previos pero en sentido opuesto. Los modelos mostraron un desempeño errático al clasificar tumores malignos, lo que resultó en un aumento de falsos negativos.
+  Este problema es crítico en el contexto clínico, ya que no identificar correctamente tumores malignos puede tener consecuencias graves.
+3. **Evaluación de métricas:**
+  - Aunque el modelo alcanzó un F1-Score de 0.84, que a simple vista podría interpretarse como un buen balance entre precisión y recall, esta métrica no refleja adecuadamente los problemas de clasificación desbalanceada. Los falsos negativos en tumores malignos evidencian la necesidad de interpretar las métricas en función del contexto y no solo de su valor numérico.
+4. **Implicaciones generales:**
+  - El modelo aprendió a detectar tumores benignos con mayor precisión, pero a costa de reducir su capacidad para identificar malignos. Esto refuerza la importancia de mantener un equilibrio en las clases del conjunto de datos y garantizar la calidad de los datos generados, especialmente en aplicaciones sensibles como la clasificación de tumores.
+
+
+PARA MODELO FINAL 
 ### Funcionamiento del Modelo
 1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
 1. Las capas de MaxPooling reducen las dimensiones de las características.
