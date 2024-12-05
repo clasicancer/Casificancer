@@ -70,7 +70,7 @@ El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de i
 Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
 - **Escalado:** Los valores de los píxeles se convierten de `[0, 255]` a `[0, 1]`.
 
-## Construcción del MODELO 1
+## Construcción del modelo 1
 
 La red que construimos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales identificar tumores malignos y benignos en muestras de tejido mamario.
 
@@ -96,7 +96,7 @@ Este fue el primer modelo que hicimos, el cual tiene tres capas convolucionales 
 - **Trainable params:** 6,446,498
 - **Non-trainable params:** 0
 
-### Funcionamiento del Modelo
+### Funcionamiento del modelo
 1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
 1. Las capas de MaxPooling reducen las dimensiones de las características.
 1. La capa de Flatten transforma los datos en un vector plano.
@@ -150,7 +150,7 @@ Con un F1-Score de 0.853 pensaríamos que nos indica un balance excelente entre 
 
 - Los modelos entrenados con esta proporción mostraron un alto rendimiento en la clasificación de tumores malignos, lo que resultó en una notable reducción de falsos negativos. Esto es particularmente beneficioso en el contexto clínico, ya que ayuda a minimizar el riesgo de no detectar casos malignos que podrían requerir atención inmediata. No obstante, los modelos tuvieron un desempeño limitado al clasificar tumores benignos. Esto se debe a la mayor cantidad de ejemplos de tumores malignos en el conjunto de entrenamiento, lo que llevó a que los modelos priorizaran esta categoría y "forzaran" la clasificación de imágenes como malignas. En consecuencia, el modelo no logró aprender lo suficiente sobre los tumores benignos, lo que resultó en un elevado número de falsos positivos. Esta desproporción evidencia la necesidad de un balance adecuado en los datos de entrenamiento para mejorar la capacidad de generalización del modelo.
 ---
-### **Modelo 2.**
+### **MODELO 2.**
 Dados los problemas presentados en el modelo 1, se decidió hacer un nuevo modelo que fue entrenado con la distribución original de los datos.
   - **images**.
   Proporciones Iniciales (Usadas para entrenar los primeros dos modelos):
@@ -174,7 +174,7 @@ La gráfica a continuación muestra la distribución original de las clases:
 Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
 - **Escalado:** Los valores de los píxeles se convierten de `[0, 255]` a `[0, 1]`.
 ---
-## Construcción del modelo
+## Construcción del modelo 2
 
 La red que construimos se basa en una arquitectura de **red neuronal convolucional (CNN)**.
 
@@ -199,7 +199,7 @@ La red que construimos se basa en una arquitectura de **red neuronal convolucion
 - **Trainable params:** 6,498,562
 - **Non-trainable params:** 0
 
-### Funcionamiento del Modelo
+### Funcionamiento del modelo 2
 1. **Capa de Rescaling:**
   - La capa inicial `(rescaling_2)` escala los valores de los píxeles de las imágenes de entrada al rango [0, 1]. Esto es necesario para normalizar los datos y facilitar el entrenamiento.
 1. **Capas Convolucionales (Conv2D):**
@@ -278,7 +278,7 @@ Con un F1-Score de 0.84 pensaríamos que nos indica un balance excelente entre p
     - El modelo aprendió a detectar tumores benignos con mayor precisión, pero redujo su capacidad para identificar malignos, esto refuerza la importancia de mantener un equilibrio en las clases del conjunto de datos y garantizar la calidad de los datos generados, especialmente en aplicaciones sensibles como la clasificación de tumores.
 
 ---
-### **Modelo 3.**
+### **MODELO 3.**
 Dados los problemas presentados en el modelo 2, se decidió hacer un nuevo modelo.
 - **Áreas de mejora:**
   - Investigar cuál sería un data Augmentation más significativo para el modelo. Qué tipo de transformaciones son mejores para imágenes de tumores, las que menos las afecten. 
