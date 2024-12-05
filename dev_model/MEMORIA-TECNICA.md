@@ -36,6 +36,7 @@ El cáncer de mama es una de las principales causas de muerte en mujeres a nivel
 Los avances en inteligencia artificial, particularmente en deep learning, han abierto nuevas posibilidades para automatizar y mejorar la precisión del diagnóstico. Este proyecto implementa una **Red Neuronal Convolucional (CNN)**, una arquitectura especializada en el procesamiento de datos visuales para construir un clasificador de imágenes histopatológicas que detecte automáticamente tumores benignos y malignos en muestras de tejido mamario, optimizando el diagnóstico y reduciendo la carga de trabajo del personal médico.
 
 
+
 ## Fuentes de información y procedimientos aplicados
 
 ### **MODELO 1**
@@ -357,14 +358,12 @@ La red que construimos se basa en una arquitectura de **red neuronal convolucion
 
 ## Resultados modelo
 
-El modelo muestra signos claros de sobreajuste.
+El modelo muestra signos ligeros de sobreajuste.
 
 ![trainvstest](../images/TrainVS3.png)
 
-### **Precisión (Accuracy)**:
-
-### **Pérdida (Loss)**:
-
+Aunque este fue el modelo que mejores resultados de predicción dio, es posible notar un ligero indicio de sobreajuste.  Esto debido a que a pesar de que las métricas de validación no empeoran drásticamente, el modelo comienza a mostrar una brecha entre el desempeño en entrenamiento y validación, especialmente en las últimas épocas.
+Por lo que aún hay partes del modelo a mejorar. Algunas alternativas pueden ser agregar regularización o hacer un mejor aumento de datos.
  
 ## Pruebas sobre el modelo
 ### MODELO 3: *cancer_modelo_trans*
