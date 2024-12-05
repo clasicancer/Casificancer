@@ -131,9 +131,9 @@ El modelo muestra signos claros de sobreajuste.
 ### Modelo 1: cancer_modelo_2
 Primero, evaluamos con f1-score, de donde tenemos los siguientes resultados :
 
-F1-Score (ponderado): 0.8533874660761027
-F1-Score para la clase 'benign': 0.76
-F1-Score para la clase 'malignant': 0.90
+- F1-Score (ponderado): 0.8533874660761027
+- F1-Score para la clase 'benign': 0.76
+- F1-Score para la clase 'malignant': 0.90
 
 Del mismo modo, calculamos la curva ROC, junto con su AUC:
 ![Curva roc](../images/Roc-curve-1.png)
@@ -149,9 +149,9 @@ Con un F1-Score de 0.853 pensaríamos que nos indica un balance excelente entre 
 ## Conclusiones
 
 - Los modelos entrenados con esta proporción mostraron un alto rendimiento en la clasificación de tumores malignos, lo que resultó en una notable reducción de falsos negativos. Esto es particularmente beneficioso en el contexto clínico, ya que ayuda a minimizar el riesgo de no detectar casos malignos que podrían requerir atención inmediata. No obstante, los modelos tuvieron un desempeño limitado al clasificar tumores benignos. Esto se debe a la mayor cantidad de ejemplos de tumores malignos en el conjunto de entrenamiento, lo que llevó a que los modelos priorizaran esta categoría y "forzaran" la clasificación de imágenes como malignas. En consecuencia, el modelo no logró aprender lo suficiente sobre los tumores benignos, lo que resultó en un elevado número de falsos positivos. Esta desproporción evidencia la necesidad de un balance adecuado en los datos de entrenamiento para mejorar la capacidad de generalización del modelo.
-
+---
 ### **Modelo 2. Data Augmentatiton**
-Dados los problemas presentados en el modelo 1, se decidió hacer un un nueno modelo al que llamamos Data Augmentatiton (Utilizada para entrenar los demás modelos)
+Dados los problemas presentados en el modelo 1, se decidió hacer un nuevo modelo al que llamamos Data Augmentatiton (Utilizada para entrenar los demás modelos)
 
 - El método para generar imágenes que se utilizó fue:
 ![Metodo 2](../images/Mod-DA2.png)
@@ -165,11 +165,12 @@ Dados los problemas presentados en el modelo 1, se decidió hacer un un nueno mo
 
 ### Distribución de original de clases
 
-La gráfica a continuación muestra la distribución de las clases:
+La gráfica a continuación muestra la distribución original de las clases:
 
 ![Distribución Original de Clases](../images/Proportion1.png)
 
 ### Distribución de ImageDataGenerator
+La gráfica a continuación muestra la distribución después de un aumento en las clases:
 ![Distribución Original de Clases](../images/Proportion2.png)
 ### Observaciones:
 - Total images: 8350
@@ -180,31 +181,15 @@ La gráfica a continuación muestra la distribución de las clases:
 
 ## Pipeline de Preparación
 ### 1. Crear Etiquetas Binarias
-- Clasificamos las imágenes basándonos en si son tumor maligno o tumor benigno.
-### 2. División del Conjunto de Datos
-- Los datos se dividen en entrenamiento y validación con proporciones del 80% y 20% respectivamente.
-
-  | Conjunto         | Cantidad de Imágenes |
-  |-------------------|----------------------|
-  | Entrenamiento     | 2,197               |
-  | Validación        | 550                 |
-  
-
-  - **Total de imágenes:** 2,747
-  - **Etiquetas:**
-    - **malaria_SI:** 2,018 imágenes
-    - **malaria_NO:** 729 imágenes
+- Clasificamos las imágenes basándonos en tumor maligno o tumor benigno.
 
 ### 3. Preprocesamiento
 Antes de usar las imágenes, se realiza un escalado de sus píxeles para mejorar el rendimiento del modelo:
 - **Escalado:** Los valores de los píxeles se convierten de `[0, 255]` a `[0, 1]`.
 ---
-
-
-
 ## Construcción del modelo
 
-La red que construimos se basa en una arquitectura de **red neuronal convolucional (CNN)**, una técnica ideal para problemas de visión por computadora. Las CNNs son capaces de extraer características clave de las imágenes, como texturas, bordes y patrones complejos, que son esenciales identificar tumores malignos y benignos en muestras de tejido mamario.
+La red que construimos se basa en una arquitectura de **red neuronal convolucional (CNN)**.
 
 ### Aquitectura
 
@@ -239,9 +224,9 @@ La red que construimos se basa en una arquitectura de **red neuronal convolucion
 Esta red no es adecuada para la tarea de clasificación de tumores benignos y malignos porque:
 
 - Tiene solo tres capas convolucionales y tiene una función de pérdida. 
-- Se generó un aumento casi del 100% de las imágenes benignas que se tenían originalmente. Lo cual puede resultar peligroso si no se genera bien y comprometer la calidad de las imágenes generadas. Lo que se traduciría como meter mucho ruido al modelo o que este aprenda características de las imágenes modificadas que no tienen mucha relación con las imágenes originales.
-- Se invirtió la proporción, ahora la clase benigna es la predominante. Lo cual terminó por generar los mismos problemas que se describieron en la sección anterior, pero ahora con benignos.
-- Aumento de falsos negativos. Los modelos aprendían mejor a detectar los tumores benignos y eran muy erráticos con los tumores malignos. En este contexto eso es grave, pues interese muy precisos detectando verdaderos positivos.
+- Se generó un aumento casi del 100% de las imágenes benignas que se tenían originalmente. Lo cual puede resultar peligroso si no se genera bien y comprometer la calidad de las imágenes generadas, lo que se traduciría como meter mucho ruido al modelo o que este aprenda características de las imágenes modificadas que no tienen mucha relación con las imágenes originales.
+- Se invirtió la proporción, ahora la clase benigna es la predominante. lo cual terminó por generar los mismos problemas que se describieron en la sección anterior, pero ahora con benignos.
+- Aumento de falsos negativos. Los modelos aprendían mejor a detectar los tumores benignos y eran muy erráticos con los tumores malignos.
 
 
 
@@ -286,16 +271,26 @@ Con un F1-Score de 0.84 pensaríamos que nos indica un balance excelente entre p
 - El aumento artificial de imágenes benignas casi duplicó la cantidad original, pero esto introdujo varios desafíos importantes:
 
 1. **Riesgos de la generación de datos:**
-  - Si las imágenes generadas no tienen la calidad suficiente o presentan características irrelevantes respecto a las originales, el modelo puede aprender patrones incorrectos. Esto podría introducir ruido significativo, comprometiendo su capacidad para generalizar correctamente.
+    - Si las imágenes generadas no tienen la calidad suficiente o presentan características irrelevantes respecto a las originales, el modelo puede aprender patrones incorrectos. Esto podría introducir ruido significativo, comprometiendo su capacidad para generalizar correctamente.
 2. **Desbalance de clases invertido:**
-  - Al invertir la proporción de las clases, la categoría benigna se volvió predominante, replicando los problemas previos pero en sentido opuesto. Los modelos mostraron un desempeño errático al clasificar tumores malignos, lo que resultó en un aumento de falsos negativos.
-  Este problema es crítico en el contexto clínico, ya que no identificar correctamente tumores malignos puede tener consecuencias graves.
+    - Al invertir la proporción de las clases, la categoría benigna se volvió predominante, replicando los problemas previos pero en sentido opuesto. Los modelos mostraron un desempeño errático al clasificar tumores malignos, lo que resultó en un aumento de falsos negativos.
+    Este problema es crítico en el contexto clínico, ya que no identificar correctamente tumores malignos puede tener consecuencias graves en los pacientes.
 3. **Evaluación de métricas:**
-  - Aunque el modelo alcanzó un F1-Score de 0.84, que a simple vista podría interpretarse como un buen balance entre precisión y recall, esta métrica no refleja adecuadamente los problemas de clasificación desbalanceada. Los falsos negativos en tumores malignos evidencian la necesidad de interpretar las métricas en función del contexto y no solo de su valor numérico.
+    - Aunque el modelo alcanzó un F1-Score de 0.84, que a simple vista podría interpretarse como un buen balance entre precisión y recall, esta métrica no refleja adecuadamente los problemas de clasificación desbalanceada. Los falsos negativos en tumores malignos evidencian la necesidad de interpretar las métricas en función del contexto y no solo de su valor numérico.
 4. **Implicaciones generales:**
-  - El modelo aprendió a detectar tumores benignos con mayor precisión, pero a costa de reducir su capacidad para identificar malignos. Esto refuerza la importancia de mantener un equilibrio en las clases del conjunto de datos y garantizar la calidad de los datos generados, especialmente en aplicaciones sensibles como la clasificación de tumores.
+    - El modelo aprendió a detectar tumores benignos con mayor precisión, pero redujo su capacidad para identificar malignos, esto refuerza la importancia de mantener un equilibrio en las clases del conjunto de datos y garantizar la calidad de los datos generados, especialmente en aplicaciones sensibles como la clasificación de tumores.
 
+---
+### **Modelo 3.**
+Dados los problemas presentados en el modelo 2, se decidió hacer un nuevo modelo.
+- **Áreas de mejora:**
+  - Investigar cuál sería un data Augmentation más significativo para el modelo. Qué tipo de transformaciones son mejores para imágenes de tumores, las que menos las afecten. 
+  - Encontrar el balance que más sentido haga para el contexto.
+  - Probar con otras técnicas para compensar el balance de clases: por ejemplo, en lugar de aumento de datos, se podría jugar con la asignación de pesos; qué tanto penaliza el modelo a la clase mayoritaria.
 
+ 
+
+---
 PARA MODELO FINAL 
 ### Funcionamiento del Modelo
 1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
