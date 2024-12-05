@@ -53,7 +53,7 @@ El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de i
 - Clasificamos las imágenes basándonos en si son benignas o malignas, su distribución:
   ![Distribucion binaria](../images/Proportion1.png)
 ### 2. División del Conjunto de Datos
-- Los datos se dividen en entrenamiento y validación con proporciones del 66% y 31% respectivamente.
+- Los datos se dividen en entrenamiento y validación con proporciones del 69% y 31% respectivamente.
 
   | Conjunto         | Cantidad de Imágenes |
   |-------------------|----------------------|
@@ -108,7 +108,7 @@ Este fue el primer modelo que hicimos, el cual tiene tres capas convolucionales 
 Esta red no es adecuada para la tarea de clasificación de tumores benignos y malignos porque:
 
 - Tiene solo tres capas convolucionales y tiene una función de pérdida. 
-- Los modelos entrenados con esta proporción eran muy buenos clasificando tumores malignos. Lo que generaba una disminución de falsos negativos; lo cual en el contexto es muy bueno.
+- Los modelos entrenados con esta proporción eran muy buenos clasificando tumores malignos lo que generaba una disminución de falsos negativos; lo cual en el contexto es muy bueno.
 - Los modelos eran “malos” clasificando tumores como benignos. Al haber tenido un mayor número de ejemplos malignos, los modelos trataban de “forzar” a clasificar las imágenes como tal; debido a que no aprendió lo suficiente de benignos para poder generalizar bien. Esto desembocó en tener muchos falsos positivos.
 
 
@@ -200,11 +200,21 @@ La red que construimos se basa en una arquitectura de **red neuronal convolucion
 - **Non-trainable params:** 0
 
 ### Funcionamiento del Modelo
-1. Las imágenes se pasan a través de tres capas convolucionales para extraer características espaciales.
-1. Las capas de MaxPooling reducen las dimensiones de las características.
-1. La capa de Flatten transforma los datos en un vector plano.
-1. Las capas densas realizan la clasificación basada en las características extraídas.
-1. Capa de salida. Una sola neurona con una función de activación sigmoide produce una probabilidad entre 0 y 1.
+1. **Capa de Rescaling:**
+  - La capa inicial `(rescaling_2)` escala los valores de los píxeles de las imágenes de entrada al rango [0, 1]. Esto es necesario para normalizar los datos y facilitar el entrenamiento.
+1. **Capas Convolucionales (Conv2D):**
+  - El modelo tiene tres capas convolucionales (`conv2d_6`, `conv2d_7`, `conv2d_8`) con 64 filtros cada una, que extraen características espaciales como bordes, texturas y patrones. Estas capas permiten identificar relaciones locales en las imágenes.
+1. **Capas de Reducción de Dimensionalidad (MaxPooling2D):**
+  - Las capas de MaxPooling (`max_pooling2d_6`, `max_pooling2d_7`, `max_pooling2d_8`) reducen las dimensiones espaciales de las características extraídas, conservando las más relevantes y reduciendo el costo computacional.
+1. **Capa de Regularización (Dropout):**
+  - La capa de Dropout (`dropout_2`) desactiva aleatoriamente el 50% de las neuronas durante el entrenamiento para prevenir el sobreajuste y mejorar la capacidad de generalización del modelo.
+1. **Capa de Aplanamiento (Flatten):**
+  - La capa `flatten_2` convierte las características extraídas (un tensor tridimensional) en un vector plano, preparándolas para la entrada a la red totalmente conectada (Dense).
+1. **Capas Densas:**
+  - La primera capa densa (`dense_4`) tiene 128 neuronas y utiliza una función de activación ReLU para aprender combinaciones no lineales de las características extraídas.
+  - La segunda capa densa (`dense_5`) es la capa de salida y tiene 2 neuronas (una para cada clase: benigno y maligno) con una función de activación softmax, que produce las probabilidades de clasificación.
+
+Este modelo emplea una arquitectura convolucional para extraer y procesar características espaciales de las imágenes, reduciendo su dimensionalidad progresivamente. Finalmente, usa una red densa para realizar la clasificación binaria (benigno vs. maligno), ajustándose mediante regularización para mejorar su capacidad de generalización.
 
 ### Problemas 
 
