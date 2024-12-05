@@ -46,6 +46,9 @@ El archivo de modelo necesario para ejecutar la API es bastante pesado y no est�
  
 [Descargar cancer_modelo_2.h5](https://drive.google.com/file/d/17XrqdCtbny6RukYmdqZqthdpPddUPYFi/view?usp=share_link)
 
+[Descargar cancer_modelo_1.h5](https://drive.google.com/file/d/1soqhuJiuDvAopDfQRg8jR2RjYfnlnK0b/view?usp=share_link)
+
+[Descargar cancer_modelo_trans_1.h5](https://drive.google.com/file/d/1RyIMKE782dmjdUphPpUdTMRAW4SVLkeC/view?usp=share_link)
 
 Por favor, guarda el archivo en la ubicación indicada en la configuración del modelo (/app/cancer_modelo_2.h5 si usas Docker).
  

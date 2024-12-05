@@ -39,6 +39,13 @@ Los avances en inteligencia artificial, particularmente en deep learning, han ab
 
 ## Fuentes de información y procedimientos aplicados
 
+A lo largo del proyecto desarrollamos varios modelos, cada uno con el objetivo de mejorar la clasificación de las imágenes. En la memoria técnica presentamos el primer modelo con el que iniciamos, y posteriormente se puede observar un avance significativo en los modelos siguientes. Aunque algunos modelos mostraron métricas prometedoras, no clasificaban correctamente en ciertos casos, lo que nos llevó a iterar y refinar nuestras aproximaciones.
+
+
+El usuario puede acceder a estos modelos en la carpeta [documentacion-api][app/models/documentacion-api.md], donde se encuentran organizados para facilitar su revisión. Además, en la carpeta dev_model se incluyen dos notebooks principales:
+  - `creacion_de_nuetra_CNN`: Documenta los primeros modelos que desarrollamos como punto de partida.
+  - `2_Creación_de_nuestra_CNN`: Contiene varios modelos, incluyendo el modelo final, mostrando el progreso logrado en nuestras iteraciones.
+Finalmente, también se incluye el notebook `Prueba_modelos`, donde se documentan las pruebas realizadas a los diferentes modelos desarrollados durante el proyecto. Esta estructura permite al usuario explorar el proceso de diseño y mejora de los modelos de manera clara y detallada.
 ### **MODELO 1**
 El conjunto de datos, descargado de BreakHis, pertenece a la clasificación de imágenes histopatológicas del cáncer de mama. Este conjunto de datos esta compuesto por los siguientes archivos:
 
@@ -480,3 +487,6 @@ Definición: Conjunto estructurado de datos utilizado para entrenar y evaluar el
 ### **25. TensorFlow**
 - **Definición:** Plataforma de código abierto para construir, entrenar y desplegar modelos de aprendizaje automático y redes neuronales profundas.
 
+
+
+[def]: #documentacion-api
