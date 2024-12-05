@@ -23,7 +23,7 @@ from models.images import ImageData
 
 
 # Inicializa el clasificador
-classifier = CancerClassifier("cancer_modelo_2.h5")
+classifier = CancerClassifier("cancer_modelo_trans_1.h5")
 
 # Inicializa API
 app = FastAPI()
