@@ -150,8 +150,8 @@ Con un F1-Score de 0.853 pensaríamos que nos indica un balance excelente entre 
 
 - Los modelos entrenados con esta proporción mostraron un alto rendimiento en la clasificación de tumores malignos, lo que resultó en una notable reducción de falsos negativos. Esto es particularmente beneficioso en el contexto clínico, ya que ayuda a minimizar el riesgo de no detectar casos malignos que podrían requerir atención inmediata. No obstante, los modelos tuvieron un desempeño limitado al clasificar tumores benignos. Esto se debe a la mayor cantidad de ejemplos de tumores malignos en el conjunto de entrenamiento, lo que llevó a que los modelos priorizaran esta categoría y "forzaran" la clasificación de imágenes como malignas. En consecuencia, el modelo no logró aprender lo suficiente sobre los tumores benignos, lo que resultó en un elevado número de falsos positivos. Esta desproporción evidencia la necesidad de un balance adecuado en los datos de entrenamiento para mejorar la capacidad de generalización del modelo.
 ---
-### **Modelo 2. Data Augmentatiton**
-Dados los problemas presentados en el modelo 1, se decidió hacer un nuevo modelo al que llamamos Data Augmentatiton (Utilizada para entrenar los demás modelos)
+### **Modelo 2.**
+Dados los problemas presentados en el modelo 1, se decidió hacer un nuevo modelo que fue entrenado con la distribución original de los datos.
 
 - El método para generar imágenes que se utilizó fue:
 ![Metodo 2](../images/Mod-DA2.png)
@@ -168,15 +168,6 @@ Dados los problemas presentados en el modelo 1, se decidió hacer un nuevo model
 La gráfica a continuación muestra la distribución original de las clases:
 
 ![Distribución Original de Clases](../images/Proportion1.png)
-
-### Distribución de ImageDataGenerator
-La gráfica a continuación muestra la distribución después de un aumento en las clases:
-![Distribución Original de Clases](../images/Proportion2.png)
-### Observaciones:
-- Total images: 8350
-- Images in class 'benign': 4392 (52.60%)
-- Images in class 'malignant': 3958 (47.40%)
-
 ---
 
 ## Pipeline de Preparación
