@@ -47,7 +47,7 @@ def upload_image(image_data: ImageData):
         
         # Preprocesar la imagen
         img_array = classifier.preprocess_image(image)
-        
+        print(img_array)
         # Realizar predicción
         result = classifier.predict(img_array)
         return result

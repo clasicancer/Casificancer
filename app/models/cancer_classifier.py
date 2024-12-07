@@ -20,8 +20,9 @@ class CancerClassifier:
         :return: Imagen preprocesada como un array de NumPy.
         """
         image = image.resize((224, 224))  # Redimensionar la imagen
-        image = img_to_array(image) / 255.0  # Normalizar los píxeles
-        return np.expand_dims(image, axis=0)  # Añadir dimensión para batch
+        image = img_to_array(image)  # Convertir a array
+        image = np.expand_dims(image, axis=0)  # Añadir dimensión para batch
+        return tf.keras.applications.resnet50.preprocess_input(image)  # Preprocesar para ResNet50
 
     def predict(self, img_array: np.ndarray) -> dict:
         """
@@ -30,15 +31,19 @@ class CancerClassifier:
         :param img_array: Imagen preprocesada como un array de NumPy.
         :return: Diccionario con el resultado de la predicción.
         """
-        class_names = ['benign', 'malignant']
-        predictions = self.model.predict(img_array)
-        score = tf.nn.softmax(predictions[0])
-        print(
-            "Esta imagen parece ser {} con un {:.2f} % de exactitud."
-            .format(class_names[np.argmax(score)],100 * np.max(score))
-        )
+        # Hacer predicción con el modelo
+        logits = self.model.predict(img_array)  # Logits del modelo
 
+        # Aplicar softmax para convertir logits en probabilidades
+        probabilities = tf.nn.softmax(logits[0]).numpy()
+
+        # Interpretar resultados
+        class_names = ['Benigno', 'Maligno']  # Clase 0 y Clase 1 respectivamente
+        predicted_class = np.argmax(probabilities)  # Índice de la clase con mayor probabilidad
+        confidence = probabilities[predicted_class]  # Probabilidad de la clase predicha
+
+        # Retornar resultado en formato JSON-friendly
         return {
-            "exactitud": round(100 * np.max(score),2),
-            "predicted_class": class_names[np.argmax(score)]
+            'resultado': f"Esta imagen parece ser {class_names[predicted_class]} "
+            f"con un {confidence * 100:.2f}% de confianza."
         }
